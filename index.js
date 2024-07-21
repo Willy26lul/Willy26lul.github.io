@@ -6,10 +6,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const addProductButton = document.getElementById('add-product-button');
 
     addProductButton.addEventListener('click', function() {
-        const productName = prompt('Introduce el nombre del producto:');
-        const productDescription = prompt('Introduce la descripción del producto:');
+        const productName = prompt('3D Model of 4-Burner Stove with Lid for Revit Family');
+        const productDescription = prompt('3D Model of 4-Burner Stove with Lid for Revit Family. Perfect for kitchen design projects that require functional and efficient equipment. Add versatility and realism to your representations with our detailed Revit Family models. 📦Digital Download ✔️ Revit Version required or superior: 2018 💟 Created by:&nbsp; 🏷️Collection Categories: Kitchen');
         const productImage = prompt('Introduce la URL de la imagen del producto:');
-        const downloadLink = prompt('Introduce el enlace de descarga del producto:');
+        const downloadLink = prompt('https://drive.google.com/file/d/19IJaom5tIQGhGjCLhzCpmA56RMnfuQSd/view?usp=drive_link');
 
         if (productName && productDescription && productImage && downloadLink) {
             const productPage = `
