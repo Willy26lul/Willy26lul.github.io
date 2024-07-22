@@ -10,7 +10,7 @@
 body {
     margin: 0 auto;
     max-width: 1200px;
-    font-family: 'Lato';
+    font-family: 'Oswald';
     color: #333;
 }
 
@@ -46,7 +46,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    background-color: #000; /* Fondo negro */
+    background-color: #000000; /* Fondo negro */
     color: #fff; /* Texto blanco */
     position: sticky; /* Header fijo */
     top: 0; /* Fijo en la parte superior */
