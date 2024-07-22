@@ -9,19 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Opcional: Añadir funcionalidad para el menú en dispositivos móviles
-    const navMenu = document.querySelector('nav');
-    if (navMenu) {
-        const menuToggle = document.createElement('button');
-        menuToggle.textContent = '☰';
-        menuToggle.classList.add('menu-toggle');
-        navMenu.insertAdjacentElement('beforebegin', menuToggle);
-
-        menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
-    }
-
     // Carga de productos desde el CSV
     Papa.parse('products.csv', {
         download: true,
