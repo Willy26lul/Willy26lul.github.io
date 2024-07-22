@@ -5,13 +5,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GalaBlock</title>
+    <title>Products - GalaBlock</title>
     <link rel="stylesheet" href="index.css" />
     <style>
-        .hidden {
-            display: none;
-        }
-
         header {
             display: flex;
             justify-content: space-between;
@@ -26,7 +22,7 @@
         }
 
         header h1 {
-            font-size: 25px;
+            font-size: 20px;
         }
 
         header a.logo {
@@ -54,28 +50,13 @@
             text-decoration: underline;
         }
 
-        .filters {
-            margin: 20px 0;
-        }
-
-        .container-items {
+        .container-icon {
             display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
+            align-items: center;
         }
 
-        .item {
-            border: 1px solid #ddd;
-            padding: 10px;
-            width: calc(33% - 20px); /* Ajustar según el número de elementos por fila */
-        }
-
-        .item img {
-            max-width: 100%;
-        }
-
-        .info-product {
-            margin-top: 10px;
+        .container-cart-products {
+            display: none; /* or adjust based on your needs */
         }
     </style>
 </head>
@@ -87,26 +68,41 @@
         <nav>
             <a href="index.html">Home</a>
             <a href="products.html">Products</a>
+            <!-- Agrega los enlaces de otras páginas si es necesario -->
         </nav>
+
     </header>
 
-    <div class="filters hidden">
-        <select id="software-filter">
-            <option value="">All Software</option>
-        </select>
-        <select id="group-filter">
-            <option value="">All Groups</option>
-        </select>
-        <select id="subgroup-filter">
-            <option value="">All SubGroups</option>
-        </select>
+    <div class="container-items">
+        <div class="item">
+            <figure>
+                <a href="product.html?img=Images/Mustanggt500%202.jpg&title=Ford&download=rvts/LR_Ford_GT40_10353.rfa">
+                    <img src="Images/Mustanggt500%202.jpg" alt="Mustanggt500" />
+                </a>
+            </figure>
+            <div class="info-product">
+                <h2>Ford</h2>
+                <p class="price hidden-price"></p>
+                <a href="rvts/LR_Ford_GT40_10353.rfa" download="rvts/LR_Ford_GT40_10353.rfa">
+                    <button>Descargar</button>
+                </a>
+            </div>
+        </div>
+        <div class="item">
+            <figure>
+                <a href="product.html?img=Images/concretetruck4.jpg&title=Concrete%20Truck&download=rvts/Concrete_Truck_2012.rfa">
+                    <img src="Images/concretetruck4.jpg" alt="Concrete Truck" />
+                </a>
+            </figure>
+            <div class="info-product">
+                <h2>Concrete Truck</h2>
+                <p class="price hidden-price"></p>
+                <a href="rvts/Concrete_Truck_2012.rfa" download="rvts/Concrete_Truck_2012.rfa">
+                    <button>Descargar</button>
+                </a>
+            </div>
+        </div>
     </div>
-
-    <div class="container-items" id="product-container">
-        <!-- Los productos se agregarán aquí -->
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="index.js"></script>
 </body>
 </html>
