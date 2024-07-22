@@ -188,3 +188,10 @@ header {
 h1 {
     font-family: 'Oswald', sans-serif; /* Aplica la tipografía Oswald al título */
 }
+.icon-cart {
+    display: none; /* Oculta el icono del carrito */
+}
+
+.container-cart-products {
+    display: none; /* Oculta el contenedor del carrito */
+}
