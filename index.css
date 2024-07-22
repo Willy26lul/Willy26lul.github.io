@@ -218,7 +218,7 @@ h1, h2, p, button {
 }
 /* Agrega espacio entre el header y el grid de productos */
 .container-items {
-    margin-top: 20px; /* Ajusta este valor según el espacio deseado */
+    margin-top: 100px; /* Ajusta este valor según el espacio deseado */
 }
 
 /* Aplica la tipografía Oswald a los productos */
