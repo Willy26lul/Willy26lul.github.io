@@ -25,14 +25,22 @@ body {
     cursor: pointer;
 }
 
+.item {
+    border-radius: 10px;
+    overflow: hidden; /* Asegura que la imagen no se desborde del contenedor */
+    /* Ajusta el tamaño del contenedor del ítem según sea necesario */
+    max-width: 50px; /* Cambia este valor según el tamaño deseado */
+}
+
 .item img {
-    width: 50%;
-    height: auto; /* Ajusta la altura automáticamente manteniendo la proporción */
-    max-height: 100px; /* Ajusta la altura máxima que desees */
-    object-fit: cover; /* Mantiene la proporción y cubre el área sin distorsionar la imagen */
+    width: 100%; /* Hace que la imagen se ajuste al ancho del contenedor */
+    height: auto; /* Mantiene la proporción original de la imagen */
+    max-height: 200px; /* Ajusta la altura máxima según el tamaño del contenedor */
+    object-fit: cover; /* Mantiene la proporción y cubre el área del contenedor sin distorsionar */
     border-radius: 10px 10px 0 0;
     transition: all .5s;
 }
+
 
 /* Header */
 header {
