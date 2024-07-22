@@ -197,6 +197,7 @@ header h1 {
     color: #fff;
     padding: 15px 10px;
     cursor: pointer;
+    width: 100%; /* Ensures the button spans the full width of the container */
 }
 
 .hidden-price {
