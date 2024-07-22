@@ -10,7 +10,7 @@
 body {
     margin: 0 auto;
     max-width: 1200px;
-    font-family: 'Oswald';
+    font-family: 'Oswald', sans-serif; /* Aplica la fuente Oswald a todo el cuerpo */
     color: #333;
 }
 
@@ -182,11 +182,13 @@ header h1 {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    font-family: 'Oswald', sans-serif; /* Aplica la tipografía Oswald a los productos */
 }
 
 .price {
     font-size: 18px;
     font-weight: 900;
+    font-family: 'Oswald', sans-serif; /* Aplica la tipografía Oswald a los precios */
 }
 
 .info-product button {
@@ -203,8 +205,8 @@ header h1 {
 }
 
 /* Tipografía */
-h1 {
-    font-family: 'Oswald', sans-serif; /* Aplica la tipografía Oswald al título */
+h1, h2, p, button {
+    font-family: 'Oswald', sans-serif; /* Aplica la tipografía Oswald a todos los encabezados, párrafos y botones */
 }
 
 .icon-cart {
