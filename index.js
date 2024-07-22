@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
         download: true,
         header: true,
         complete: function(results) {
+            console.log('CSV data loaded:', results.data); // Verificar si los datos se cargan correctamente
             const container = document.getElementById('product-container');
 
             results.data.forEach(product => {
@@ -51,6 +52,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 container.appendChild(itemDiv);
             });
+        },
+        error: function(error) {
+            console.error('Error loading CSV:', error); // Mostrar errores en la carga del CSV
         }
     });
 });
