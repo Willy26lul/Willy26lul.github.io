@@ -29,7 +29,7 @@ body {
     border-radius: 10px;
     overflow: hidden; /* Asegura que la imagen no se desborde del contenedor */
     /* Ajusta el tamaño del contenedor del ítem según sea necesario */
-    max-width: 350px; /* Cambia este valor según el tamaño deseado */
+    max-width: 2000px; /* Cambia este valor según el tamaño deseado */
 }
 
 .item img {
