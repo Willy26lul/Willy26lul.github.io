@@ -97,15 +97,18 @@
             const params = new URLSearchParams(window.location.search);
             const img = params.get('img');
             const title = params.get('title');
+            const description = params.get('description');
             const download = params.get('download');
             
-            if (img && title && download) {
+            if (img && title && download && description) {
                 const imgElement = document.querySelector('.product-detail img');
                 const titleElement = document.querySelector('.product-detail h2');
+                const descriptionElement = document.querySelector('.product-detail .description');
                 const downloadLink = document.querySelector('.product-detail a');
 
                 if (imgElement) imgElement.src = img;
                 if (titleElement) titleElement.textContent = title;
+                if (descriptionElement) descriptionElement.textContent = description;
                 if (downloadLink) {
                     downloadLink.href = download;
                     downloadLink.download = download.split('/').pop();
