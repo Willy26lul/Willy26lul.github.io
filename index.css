@@ -275,3 +275,8 @@ h1, h2, p, button {
     padding: 15px 10px;
     cursor: pointer;
 }
+<style>
+    .description.hidden {
+        display: none;
+    }
+</style>
