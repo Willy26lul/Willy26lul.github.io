@@ -54,6 +54,10 @@
             text-decoration: underline;
         }
 
+        .filters {
+            margin: 20px 0;
+        }
+
         .container-items {
             display: flex;
             flex-wrap: wrap;
@@ -63,7 +67,7 @@
         .item {
             border: 1px solid #ddd;
             padding: 10px;
-            width: calc(33% - 20px); /* Adjust width based on the number of items per row */
+            width: calc(33% - 20px); /* Ajustar según el número de elementos por fila */
         }
 
         .item img {
@@ -86,11 +90,23 @@
         </nav>
     </header>
 
+    <div class="filters hidden">
+        <select id="software-filter">
+            <option value="">All Software</option>
+        </select>
+        <select id="group-filter">
+            <option value="">All Groups</option>
+        </select>
+        <select id="subgroup-filter">
+            <option value="">All SubGroups</option>
+        </select>
+    </div>
+
     <div class="container-items" id="product-container">
         <!-- Los productos se agregarán aquí -->
     </div>
 
-    <script src="index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="index.js"></script>
 </body>
 </html>
