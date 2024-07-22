@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products - GalaBlock</title>
+    <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+    <header>
+        <h1>GALABLOCK</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="products.html">Productos</a></li>
+                <li><a href="about.html">Sobre Nosotros</a></li>
+                <li><a href="contact.html">Contacto</a></li>
+            </ul>
+        </nav>
+        <div class="container-icon">
+            <svg class="icon-cart" viewBox="0 0 24 24">
+                <!-- SVG content for cart icon -->
+            </svg>
+            <div class="container-cart-products hidden-cart">
+                <!-- Cart content -->
+            </div>
+        </div>
+    </header>
+
+    <div class="container-items">
+        <!-- Aquí puedes agregar los productos de tu tienda -->
+        <div class="item">
+            <figure>
+                <a href="product.html?img=Images/Mustanggt500%202.jpg&title=Ford&download=rvts/LR_Ford_GT40_10353.rfa">
+                    <img src="Images/Mustanggt500%202.jpg" alt="Mustanggt500" />
+                </a>
+            </figure>
+            <div class="info-product">
+                <h2>Ford</h2>
+                <p class="price hidden-price"></p>
+                <a href="rvts/LR_Ford_GT40_10353.rfa" download="rvts/LR_Ford_GT40_10353.rfa">
+                    <button>Descargar</button>
+                </a>
+            </div>
+        </div>
+        <div class="item">
+            <figure>
+                <a href="product.html?img=Images/concretetruck4.jpg&title=Concrete%20Truck&download=rvts/Concrete_Truck_2012.rfa">
+                    <img src="Images/concretetruck4.jpg" alt="Concrete Truck" />
+                </a>
+            </figure>
+            <div class="info-product">
+                <h2>Concrete Truck</h2>
+                <p class="price hidden-price"></p>
+                <a href="rvts/Concrete_Truck_2012.rfa" download="rvts/Concrete_Truck_2012.rfa">
+                    <button>Descargar</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
