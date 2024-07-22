@@ -216,3 +216,21 @@ h1, h2, p, button {
 .container-cart-products {
     display: none; /* Oculta el contenedor del carrito */
 }
+/* Agrega espacio entre el header y el grid de productos */
+.container-items {
+    margin-top: 20px; /* Ajusta este valor según el espacio deseado */
+}
+
+/* Aplica la tipografía Oswald a los productos */
+.info-product {
+    font-family: 'Oswald', sans-serif;
+}
+
+.price {
+    font-family: 'Oswald', sans-serif;
+}
+
+/* Aplica la tipografía Oswald a todos los encabezados, párrafos y botones */
+h1, h2, p, button {
+    font-family: 'Oswald', sans-serif;
+}
