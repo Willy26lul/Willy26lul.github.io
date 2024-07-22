@@ -25,6 +25,16 @@
             font-size: 20px;
         }
 
+        header a.logo {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        header a.logo:hover {
+            text-decoration: underline;
+        }
+
         nav {
             display: flex;
             gap: 15px;
@@ -43,7 +53,9 @@
 </head>
 <body>
     <header>
-        <h1>GALABLOCK</h1>
+        <a href="index.html" class="logo">
+            <h1>GALABLOCK</h1>
+        </a>
         <nav>
             <a href="index.html">Home</a>
             <a href="products.html">Products</a>
