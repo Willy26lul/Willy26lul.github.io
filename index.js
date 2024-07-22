@@ -36,15 +36,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 itemDiv.classList.add('item');
                 itemDiv.innerHTML = `
                     <figure>
-                        <a href="product.html?img=${encodeURIComponent(product['Image Reference'])}&title=${encodeURIComponent(product.Title)}&description=${encodeURIComponent(product.Description)}&download=${encodeURIComponent(product.download)}" data-description="${product.Description}">
-                            <img src="${product['Image Reference']}" alt="${product.Title}" />
+                        <a href="product.html?img=${encodeURIComponent(product['Ruta Image Reference'])}&title=${encodeURIComponent(product.Title)}&description=${encodeURIComponent(product.Description)}&download=${encodeURIComponent(product.RutaDescarga)}" data-description="${product.Description}">
+                            <img src="${product['Ruta Image Reference']}" alt="${product.Title}" />
                         </a>
                     </figure>
                     <div class="info-product">
                         <h2>${product.Title}</h2>
                         <p class="description hidden">${product.Description}</p>
-                        <p class="price hidden-price"></p>
-                        <a href="${product.download}" download="${product.download}">
+                        <a href="${product.RutaDescarga}" download="${product.RutaDescarga}">
                             <button>Descargar</button>
                         </a>
                     </div>
