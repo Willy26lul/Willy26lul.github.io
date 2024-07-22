@@ -24,8 +24,11 @@ body{
     cursor: pointer;
 }
 
-img{
-    max-width: 100%;
+.item img {
+    width: 100%;
+    height: auto; /* Ajusta la altura automáticamente manteniendo la proporción */
+    max-height: 200px; /* Ajusta la altura máxima que desees */
+    object-fit: cover; /* Mantiene la proporción y cubre el área sin distorsionar la imagen */
 }
 
 /* Header */
@@ -192,4 +195,7 @@ header{
 }
 .hidden-price {
     display: none;
+}
+.icon-cart {
+    display: none; /* Oculta el icono del carrito */
 }
