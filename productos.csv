@@ -1,3 +1,3 @@
-Title,Description,Image Reference,Software,Group,SubGroup
-Mustang Car,Mustang 500,Images/Mustanggt500 2.jpg,Revit,Vehicles,
-Concrete Mixer,Concrete mixing truck,Images/concretetruck4.jpg,AutoCAD,Construction,Trucks
+Title,Description,Image Reference,RutaDescarga,Software,Group,SubGroup
+Mustang Car,Mustang 500,Images/Mustanggt500 2.jpg,,Revit,Vehicles,
+Concrete Mixer,Concrete mixing truck,Images/concretetruck4.jpg,,AutoCAD,Construction,Trucks
