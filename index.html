@@ -54,10 +54,6 @@
             text-decoration: underline;
         }
 
-        .filters {
-            margin: 20px 0;
-        }
-
         .container-items {
             display: flex;
             flex-wrap: wrap;
@@ -90,116 +86,11 @@
         </nav>
     </header>
 
-    <div class="filters">
-        <select id="software-filter">
-            <option value="">All Software</option>
-        </select>
-        <select id="group-filter">
-            <option value="">All Groups</option>
-        </select>
-        <select id="subgroup-filter">
-            <option value="">All SubGroups</option>
-        </select>
-    </div>
-
     <div class="container-items" id="product-container">
         <!-- Los productos se agregarán aquí -->
     </div>
 
     <script src="index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Papa.parse('products.csv', {
-                download: true,
-                header: true,
-                complete: function(results) {
-                    const container = document.getElementById('product-container');
-                    const softwareFilter = document.getElementById('software-filter');
-                    const groupFilter = document.getElementById('group-filter');
-                    const subgroupFilter = document.getElementById('subgroup-filter');
-
-                    let softwareOptions = new Set();
-                    let groupOptions = new Set();
-                    let subgroupOptions = new Set();
-
-                    results.data.forEach(product => {
-                        // Add options to filters
-                        softwareOptions.add(product.Software);
-                        groupOptions.add(product.Group);
-                        subgroupOptions.add(product.SubGroup);
-
-                        // Create and append product items
-                        const itemDiv = document.createElement('div');
-                        itemDiv.classList.add('item');
-                        itemDiv.innerHTML = `
-                            <figure>
-                                <a href="product.html?img=${encodeURIComponent(product['Image Reference'])}&title=${encodeURIComponent(product.Title)}&description=${encodeURIComponent(product.Description)}&download=${encodeURIComponent(product.download)}" data-description="${product.Description}">
-                                    <img src="${product['Image Reference']}" alt="${product.Title}" />
-                                </a>
-                            </figure>
-                            <div class="info-product">
-                                <h2>${product.Title}</h2>
-                                <p class="description hidden">${product.Description}</p>
-                                <p class="price hidden-price"></p>
-                                <a href="${product.download}" download="${product.download}">
-                                    <button>Descargar</button>
-                                </a>
-                            </div>
-                        `;
-
-                        container.appendChild(itemDiv);
-                    });
-
-                    // Populate filter options
-                    softwareOptions.forEach(option => {
-                        const opt = document.createElement('option');
-                        opt.value = option;
-                        opt.textContent = option || 'Not specified';
-                        softwareFilter.appendChild(opt);
-                    });
-
-                    groupOptions.forEach(option => {
-                        const opt = document.createElement('option');
-                        opt.value = option;
-                        opt.textContent = option || 'Not specified';
-                        groupFilter.appendChild(opt);
-                    });
-
-                    subgroupOptions.forEach(option => {
-                        const opt = document.createElement('option');
-                        opt.value = option;
-                        opt.textContent = option || 'Not specified';
-                        subgroupFilter.appendChild(opt);
-                    });
-
-                    // Add filter event listeners
-                    [softwareFilter, groupFilter, subgroupFilter].forEach(filter => {
-                        filter.addEventListener('change', filterProducts);
-                    });
-
-                    function filterProducts() {
-                        const selectedSoftware = softwareFilter.value;
-                        const selectedGroup = groupFilter.value;
-                        const selectedSubGroup = subgroupFilter.value;
-
-                        document.querySelectorAll('.item').forEach(item => {
-                            const software = item.querySelector('a').getAttribute('data-software');
-                            const group = item.querySelector('a').getAttribute('data-group');
-                            const subgroup = item.querySelector('a').getAttribute('data-subgroup');
-
-                            if ((selectedSoftware === '' || software === selectedSoftware) &&
-                                (selectedGroup === '' || group === selectedGroup) &&
-                                (selectedSubGroup === '' || subgroup === selectedSubGroup)) {
-                                item.style.display = 'block';
-                            } else {
-                                item.style.display = 'none';
-                            }
-                        });
-                    }
-                }
-            });
-        });
-    </script>
 </body>
 </html>
