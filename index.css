@@ -28,7 +28,7 @@ body {
 .item img {
     width: 100%;
     height: auto; /* Ajusta la altura automáticamente manteniendo la proporción */
-    max-height: 200px; /* Ajusta la altura máxima que desees */
+    max-height: 50px; /* Ajusta la altura máxima que desees */
     object-fit: cover; /* Mantiene la proporción y cubre el área sin distorsionar la imagen */
     border-radius: 10px 10px 0 0;
     transition: all .5s;
