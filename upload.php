@@ -7,8 +7,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $imgFile = $_FILES['imgFile'];
         $downloadFile = $_FILES['downloadFile'];
 
-        $imgUploadDir = 'Images/';
-        $downloadUploadDir = 'rvts/';
+        $imgUploadDir = 'uploads/images/';
+        $downloadUploadDir = 'uploads/downloads/';
         $imgFilePath = $imgUploadDir . basename($imgFile['name']);
         $downloadFilePath = $downloadUploadDir . basename($downloadFile['name']);
 
