@@ -69,137 +69,78 @@
             <input type="file" id="productDownload" style="display: none;" required>
             <div class="file-name" id="downloadFileName"></div>
 
-            <button type="submit">Add Product</button>
+            <button type="submit">Save Product</button>
         </form>
-        <div id="confirmationMessage" style="display:none;">Product added successfully!</div>
-        <button id="addAnotherProduct" style="display:none;" onclick="resetForm()">Add Another Product</button>
-        <div id="productList"></div>
     </div>
 
     <script>
-        const correctPassword = 'admin123';
+        const adminPassword = 'admin123'; // Set the admin password here
 
         function checkPassword() {
-            const password = document.getElementById('adminPassword').value;
-            if (password === correctPassword) {
+            const inputPassword = document.getElementById('adminPassword').value;
+            if (inputPassword === adminPassword) {
                 document.getElementById('adminLogin').style.display = 'none';
                 document.getElementById('adminPanel').style.display = 'block';
-                loadProducts();
             } else {
                 alert('Incorrect password');
             }
         }
 
-        function loadProducts() {
-            const productList = document.getElementById('productList');
-            productList.innerHTML = '';
+        const imgDropzone = document.getElementById('imgDropzone');
+        const downloadDropzone = document.getElementById('downloadDropzone');
+        const imgFileName = document.getElementById('imgFileName');
+        const downloadFileName = document.getElementById('downloadFileName');
+        const imgPreview = document.getElementById('imgPreview');
+        const imgInput = document.getElementById('productImg');
+        const downloadInput = document.getElementById('productDownload');
+        const form = document.getElementById('productForm');
 
-            const products = JSON.parse(localStorage.getItem('products')) || [];
+        imgDropzone.addEventListener('click', () => imgInput.click());
+        downloadDropzone.addEventListener('click', () => downloadInput.click());
 
-            products.forEach((product, index) => {
-                const productItem = document.createElement('div');
-                productItem.innerHTML = `
-                    <h3>${product.title}</h3>
-                    <p>${product.description}</p>
-                    <img src="${product.imgSrc}" alt="${product.title}" style="width: 100px;">
-                    <a href="${product.download}" download>Download</a>
-                    <button onclick="deleteProduct(${index})">Delete</button>
-                `;
-                productList.appendChild(productItem);
-            });
-        }
+        imgInput.addEventListener('change', handleFileSelect);
+        downloadInput.addEventListener('change', handleFileSelect);
 
-        function deleteProduct(index) {
-            const products = JSON.parse(localStorage.getItem('products')) || [];
-            products.splice(index, 1);
-            localStorage.setItem('products', JSON.stringify(products));
-            loadProducts();
-        }
-
-        document.getElementById('productForm').addEventListener('submit', function(e) {
+        imgDropzone.addEventListener('dragover', (e) => {
             e.preventDefault();
-
-            const title = document.getElementById('productTitle').value;
-            const description = document.getElementById('productDescription').value;
-            const imgSrc = document.getElementById('productImg').dataset.filePath;
-            const download = document.getElementById('productDownload').dataset.filePath;
-
-            const newProduct = { title, imgSrc, description, download };
-            const products = JSON.parse(localStorage.getItem('products')) || [];
-            products.push(newProduct);
-            localStorage.setItem('products', JSON.stringify(products));
-
-            document.getElementById('productForm').reset();
-            document.getElementById('confirmationMessage').style.display = 'block';
-            document.getElementById('addAnotherProduct').style.display = 'block';
-            document.getElementById('imgPreview').style.display = 'none';
-            loadProducts();
+            imgDropzone.classList.add('dragover');
         });
 
-        function resetForm() {
-            document.getElementById('productForm').reset();
-            document.getElementById('confirmationMessage').style.display = 'none';
-            document.getElementById('addAnotherProduct').style.display = 'none';
-            document.getElementById('imgFileName').textContent = '';
-            document.getElementById('downloadFileName').textContent = '';
-            document.getElementById('imgPreview').src = '';
-            document.getElementById('imgPreview').style.display = 'none';
+        imgDropzone.addEventListener('dragleave', () => imgDropzone.classList.remove('dragover'));
+        imgDropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            imgDropzone.classList.remove('dragover');
+            handleFileSelect(e);
+        });
+
+        downloadDropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            downloadDropzone.classList.add('dragover');
+        });
+
+        downloadDropzone.addEventListener('dragleave', () => downloadDropzone.classList.remove('dragover'));
+        downloadDropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            downloadDropzone.classList.remove('dragover');
+            handleFileSelect(e);
+        });
+
+        function handleFileSelect(e) {
+            const files = e.target.files || e.dataTransfer.files;
+            if (files[0].type.startsWith('image/')) {
+                imgFileName.textContent = files[0].name;
+                imgPreview.src = URL.createObjectURL(files[0]);
+                imgPreview.style.display = 'block';
+            } else {
+                downloadFileName.textContent = files[0].name;
+            }
         }
 
-        function setupDropzone(dropzoneId, inputId, fileNameId) {
-            const dropzone = document.getElementById(dropzoneId);
-            const input = document.getElementById(inputId);
-            const fileName = document.getElementById(fileNameId);
-
-            dropzone.addEventListener('click', () => input.click());
-
-            dropzone.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                dropzone.classList.add('dragover');
-            });
-
-            dropzone.addEventListener('dragleave', () => {
-                dropzone.classList.remove('dragover');
-            });
-
-            dropzone.addEventListener('drop', (e) => {
-                e.preventDefault();
-                dropzone.classList.remove('dragover');
-                const file = e.dataTransfer.files[0];
-                handleFile(file, input, fileName);
-            });
-
-            input.addEventListener('change', () => {
-                const file = input.files[0];
-                handleFile(file, input, fileName);
-            });
-        }
-
-        function handleFile(file, input, fileName) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        let filePath = `/${file.name}`; // Default path
-
-        if (input.id === 'productImg') {
-            // Asignar la ruta de la carpeta de imágenes
-            filePath = `/Images/${file.name}`;
-            // Mostrar previsualización de la imagen
-            const imgPreview = document.getElementById('imgPreview');
-            imgPreview.src = e.target.result;
-            imgPreview.style.display = 'block';
-        } else if (input.id === 'productDownload') {
-            // Asignar la ruta de la carpeta de archivos descargables
-            filePath = `/rvts/${file.name}`;
-        }
-
-        input.dataset.filePath = filePath;
-        fileName.textContent = `File uploaded: ${file.name}`;
-    };
-    reader.readAsDataURL(file);
-}
-
-        setupDropzone('imgDropzone', 'productImg', 'imgFileName');
-        setupDropzone('downloadDropzone', 'productDownload', 'downloadFileName');
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('Product saved!');
+            // Here you would handle the form data and send it to your server
+        });
     </script>
 </body>
 </html>
