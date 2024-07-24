@@ -58,6 +58,35 @@
         .container-cart-products {
             display: none; /* or adjust based on your needs */
         }
+
+        .container-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: calc(33.333% - 20px);
+            box-sizing: border-box;
+        }
+
+        .item figure {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .item img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .info-product {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -70,53 +99,58 @@
             <a href="products.html">Products</a>
             <!-- Agrega los enlaces de otras páginas si es necesario -->
         </nav>
-
     </header>
 
-    <div class="container-items">
-        <div class="item">
-            <figure>
-                <a href="product.html?img=Images/Mustanggt500%202.jpg&title=Ford&download=rvts/LR_Ford_GT40_10353.rfa">
-                    <img src="Images/Mustanggt500%202.jpg" alt="Mustanggt500" />
-                </a>
-            </figure>
-            <div class="info-product">
-                <h2>Ford</h2>
-                <p class="price hidden-price"></p>
-                <a href="rvts/LR_Ford_GT40_10353.rfa" download="rvts/LR_Ford_GT40_10353.rfa">
-                    <button>Descargar</button>
-                </a>
-            </div>
-        </div>
-        <div class="item">
-            <figure>
-                <a href="product.html?img=Images/concretetruck4.jpg&title=Concrete%20Truck&download=rvts/Concrete_Truck_2012.rfa">
-                    <img src="Images/concretetruck4.jpg" alt="Concrete Truck" />
-                </a>
-            </figure>
-            <div class="info-product">
-                <h2>Concrete Truck</h2>
-                <p class="price hidden-price"></p>
-                <a href="rvts/Concrete_Truck_2012.rfa" download="rvts/Concrete_Truck_2012.rfa">
-                    <button>Descargar</button>
-                </a>
-            </div>
-        </div>
-        <div class="item">
-            <figure>
-                <a href="">
-                    <img src="Images/Mesa-de-centro-de-cristal-para-Revit.jpg" alt="Mesa de Cristal" />
-                </a>
-            </figure>
-            <div class="info-product">
-                <h2>Concrete Truck</h2>
-                <p class="price hidden-price"></p>
-                <a href="rvts/Mesa de centro de cristal.rfa" download="rvts/Mesa de centro de cristal.rfa">
-                    <button>Descargar</button>
-                </a>
-            </div>
-        </div>
+    <div class="container-items" id="productContainer">
+        <!-- Los productos se generarán aquí automáticamente -->
     </div>
-    <script src="index.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const products = [
+                {
+                    title: 'Ford',
+                    imgSrc: 'Images/Mustanggt500%202.jpg',
+                    description: 'Carro deportivo Ford Mustang GT500',
+                    download: 'rvts/LR_Ford_GT40_10353.rfa'
+                },
+                {
+                    title: 'Concrete Truck',
+                    imgSrc: 'Images/concretetruck4.jpg',
+                    description: 'Camión de concreto',
+                    download: 'rvts/Concrete_Truck_2012.rfa'
+                },
+                {
+                    title: 'Mesa de Cristal',
+                    imgSrc: 'Images/Mesa-de-centro-de-cristal-para-Revit.jpg',
+                    description: 'Mesa de centro de cristal para Revit',
+                    download: 'rvts/Mesa%20de%20centro%20de%20cristal.rfa'
+                }
+            ];
+
+            const container = document.getElementById('productContainer');
+
+            products.forEach(product => {
+                const item = document.createElement('div');
+                item.className = 'item';
+
+                item.innerHTML = `
+                    <figure>
+                        <a href="product.html?img=${encodeURIComponent(product.imgSrc)}&title=${encodeURIComponent(product.title)}&description=${encodeURIComponent(product.description)}&download=${encodeURIComponent(product.download)}">
+                            <img src="${product.imgSrc}" alt="${product.title}" />
+                        </a>
+                    </figure>
+                    <div class="info-product">
+                        <h2>${product.title}</h2>
+                        <p class="price hidden-price"></p>
+                        <a href="${product.download}" download="${product.download.split('/').pop()}">
+                            <button>Descargar</button>
+                        </a>
+                    </div>
+                `;
+
+                container.appendChild(item);
+            });
+        });
+    </script>
 </body>
 </html>
