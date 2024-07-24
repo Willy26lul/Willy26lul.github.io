@@ -6,33 +6,28 @@
     <title>Admin - GalaBlock</title>
     <link rel="stylesheet" href="index.css">
     <style>
-        .dropzone {
-            border: 2px dashed #ccc;
+        .admin-panel {
+            padding: 20px;
+        }
+        .product-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
             border-radius: 5px;
+        }
+        .product-item img {
+            max-width: 100px;
+        }
+        .dropzone {
+            border: 2px dashed #ddd;
             padding: 20px;
             text-align: center;
             margin-bottom: 10px;
             cursor: pointer;
         }
-        .dropzone.dragover {
-            background-color: #e3e3e3;
-        }
-        .file-name {
-            margin-top: 10px;
-            font-size: 14px;
-        }
-        #productTitle, #productDescription {
-            width: 100%;
-            box-sizing: border-box;
-            margin-bottom: 10px;
-        }
-        #productDescription {
-            height: 100px;
-            resize: none;
-            overflow-y: auto;
-        }
         .preview-img {
-            max-width: 100%;
+            max-width: 200px;
+            display: block;
             margin-top: 10px;
         }
     </style>
@@ -69,78 +64,146 @@
             <input type="file" id="productDownload" style="display: none;" required>
             <div class="file-name" id="downloadFileName"></div>
 
-            <button type="submit">Save Product</button>
+            <button type="submit">Add Product</button>
         </form>
+        <div id="confirmationMessage" style="display:none;">File uploaded successfully!</div>
+        <button id="addAnotherProduct" style="display:none;" onclick="resetForm()">Add Another Product</button>
+        <div id="productList"></div>
     </div>
 
     <script>
-        const adminPassword = 'admin123'; // Set the admin password here
+        const correctPassword = 'admin123';
 
         function checkPassword() {
-            const inputPassword = document.getElementById('adminPassword').value;
-            if (inputPassword === adminPassword) {
+            const password = document.getElementById('adminPassword').value;
+            if (password === correctPassword) {
                 document.getElementById('adminLogin').style.display = 'none';
                 document.getElementById('adminPanel').style.display = 'block';
+                loadProducts();
             } else {
                 alert('Incorrect password');
             }
         }
 
-        const imgDropzone = document.getElementById('imgDropzone');
-        const downloadDropzone = document.getElementById('downloadDropzone');
-        const imgFileName = document.getElementById('imgFileName');
-        const downloadFileName = document.getElementById('downloadFileName');
-        const imgPreview = document.getElementById('imgPreview');
-        const imgInput = document.getElementById('productImg');
-        const downloadInput = document.getElementById('productDownload');
-        const form = document.getElementById('productForm');
+        function loadProducts() {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
 
-        imgDropzone.addEventListener('click', () => imgInput.click());
-        downloadDropzone.addEventListener('click', () => downloadInput.click());
+            const products = JSON.parse(localStorage.getItem('products')) || [];
 
-        imgInput.addEventListener('change', handleFileSelect);
-        downloadInput.addEventListener('change', handleFileSelect);
+            products.forEach((product, index) => {
+                const productItem = document.createElement('div');
+                productItem.className = 'product-item';
+                productItem.innerHTML = `
+                    <h3>${product.title}</h3>
+                    <p>${product.description}</p>
+                    <img src="${product.imgSrc}" alt="${product.title}">
+                    <a href="${product.download}" download>Download</a>
+                    <button onclick="editProduct(${index})">Edit</button>
+                    <button onclick="deleteProduct(${index})">Delete</button>
+                `;
+                productList.appendChild(productItem);
+            });
+        }
 
-        imgDropzone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            imgDropzone.classList.add('dragover');
-        });
+        function editProduct(index) {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            const product = products[index];
 
-        imgDropzone.addEventListener('dragleave', () => imgDropzone.classList.remove('dragover'));
-        imgDropzone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            imgDropzone.classList.remove('dragover');
-            handleFileSelect(e);
-        });
+            document.getElementById('productTitle').value = product.title;
+            document.getElementById('productDescription').value = product.description;
+            document.getElementById('imgPreview').src = product.imgSrc;
+            document.getElementById('imgPreview').style.display = 'block';
+            document.getElementById('imgFileName').textContent = `Image: ${product.imgSrc.split('/').pop()}`;
+            document.getElementById('downloadFileName').textContent = `Download: ${product.download.split('/').pop()}`;
+            document.getElementById('productImg').dataset.filePath = product.imgSrc;
+            document.getElementById('productDownload').dataset.filePath = product.download;
 
-        downloadDropzone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            downloadDropzone.classList.add('dragover');
-        });
+            document.getElementById('productForm').onsubmit = function(e) {
+                e.preventDefault();
+                const title = document.getElementById('productTitle').value;
+                const description = document.getElementById('productDescription').value;
+                const imgSrc = document.getElementById('imgPreview').src;
+                const download = document.getElementById('productDownload').files[0] ? URL.createObjectURL(document.getElementById('productDownload').files[0]) : document.getElementById('productDownload').dataset.filePath;
 
-        downloadDropzone.addEventListener('dragleave', () => downloadDropzone.classList.remove('dragover'));
-        downloadDropzone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            downloadDropzone.classList.remove('dragover');
-            handleFileSelect(e);
-        });
+                products[index] = { title, description, imgSrc, download };
+                localStorage.setItem('products', JSON.stringify(products));
+                loadProducts();
 
-        function handleFileSelect(e) {
-            const files = e.target.files || e.dataTransfer.files;
-            if (files[0].type.startsWith('image/')) {
-                imgFileName.textContent = files[0].name;
-                imgPreview.src = URL.createObjectURL(files[0]);
-                imgPreview.style.display = 'block';
-            } else {
-                downloadFileName.textContent = files[0].name;
+                document.getElementById('confirmationMessage').style.display = 'block';
+                setTimeout(() => document.getElementById('confirmationMessage').style.display = 'none', 2000);
             }
         }
 
-        form.addEventListener('submit', function (e) {
+        function deleteProduct(index) {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            products.splice(index, 1);
+            localStorage.setItem('products', JSON.stringify(products));
+            loadProducts();
+        }
+
+        document.getElementById('productForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Product saved!');
-            // Here you would handle the form data and send it to your server
+
+            const title = document.getElementById('productTitle').value;
+            const description = document.getElementById('productDescription').value;
+            const imgFile = document.getElementById('productImg').files[0];
+            const downloadFile = document.getElementById('productDownload').files[0];
+
+            if (!title || !description || !imgFile || !downloadFile) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            const imgSrc = URL.createObjectURL(imgFile);
+            const downloadSrc = URL.createObjectURL(downloadFile);
+
+            const newProduct = {
+                title,
+                description,
+                imgSrc,
+                download: downloadSrc
+            };
+
+            let products = JSON.parse(localStorage.getItem('products')) || [];
+            products.push(newProduct);
+            localStorage.setItem('products', JSON.stringify(products));
+            loadProducts();
+
+            document.getElementById('confirmationMessage').style.display = 'block';
+            document.getElementById('addAnotherProduct').style.display = 'inline';
         });
+
+        document.getElementById('imgDropzone').addEventListener('click', function() {
+            document.getElementById('productImg').click();
+        });
+
+        document.getElementById('downloadDropzone').addEventListener('click', function() {
+            document.getElementById('productDownload').click();
+        });
+
+        document.getElementById('productImg').addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                document.getElementById('imgPreview').style.display = 'block';
+                document.getElementById('imgPreview').src = URL.createObjectURL(file);
+                document.getElementById('imgFileName').textContent = `Image: ${file.name}`;
+            }
+        });
+
+        document.getElementById('productDownload').addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                document.getElementById('downloadFileName').textContent = `Download: ${file.name}`;
+            }
+        });
+
+        function resetForm() {
+            document.getElementById('productForm').reset();
+            document.getElementById('imgPreview').style.display = 'none';
+            document.getElementById('imgFileName').textContent = '';
+            document.getElementById('downloadFileName').textContent = '';
+        }
     </script>
 </body>
 </html>
