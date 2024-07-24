@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="info-product">
                 <h2>${product.title}</h2>
                 <p class="description hidden">${product.description}</p>
-                <a href="${product.download}" download="${product.download}">
+                <a href="${product.download}" download>
                     <button>Descargar</button>
                 </a>
             </div>
