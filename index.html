@@ -106,7 +106,7 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const products = [
+            const products = JSON.parse(localStorage.getItem('products')) || [
                 {
                     title: 'Ford',
                     imgSrc: 'Images/Mustanggt500%202.jpg',
