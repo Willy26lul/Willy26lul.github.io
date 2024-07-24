@@ -1,45 +1,34 @@
 <?php
-header('Content-Type: application/json');
-
-$response = array();
-$response['success'] = false;
+$response = ['success' => false];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_FILES['imgFile']) && isset($_FILES['downloadFile'])) {
-        $imgFile = $_FILES['imgFile'];
-        $downloadFile = $_FILES['downloadFile'];
-
-        // Definir los directorios de carga
-        $imgUploadDir = 'Images/';
-        $downloadUploadDir = 'rvts/';
-
-        // Crear directorios si no existen
-        if (!file_exists($imgUploadDir)) {
-            mkdir($imgUploadDir, 0777, true);
+    // Directorio de destino para los archivos
+    $imgDir = 'Images/';
+    $downloadDir = 'rvts/';
+    
+    // Verifica si se ha cargado el archivo de imagen
+    if (isset($_FILES['imgFile']) && $_FILES['imgFile']['error'] === UPLOAD_ERR_OK) {
+        $imgPath = $imgDir . basename($_FILES['imgFile']['name']);
+        if (move_uploaded_file($_FILES['imgFile']['tmp_name'], $imgPath)) {
+            $response['imgUrl'] = $imgPath;
         }
-
-        if (!file_exists($downloadUploadDir)) {
-            mkdir($downloadUploadDir, 0777, true);
-        }
-
-        // Definir las rutas completas para los archivos
-        $imgFilePath = $imgUploadDir . basename($imgFile['name']);
-        $downloadFilePath = $downloadUploadDir . basename($downloadFile['name']);
-
-        // Mover los archivos a los directorios de destino
-        if (move_uploaded_file($imgFile['tmp_name'], $imgFilePath) && move_uploaded_file($downloadFile['tmp_name'], $downloadFilePath)) {
-            $response['success'] = true;
-            $response['imgUrl'] = $imgFilePath;
-            $response['downloadUrl'] = $downloadFilePath;
-        } else {
-            $response['message'] = 'Failed to move uploaded files';
-        }
-    } else {
-        $response['message'] = 'No files uploaded';
     }
-} else {
-    $response['message'] = 'Invalid request method';
-}
 
-echo json_encode($response);
+    // Verifica si se ha cargado el archivo de descarga
+    if (isset($_FILES['downloadFile']) && $_FILES['downloadFile']['error'] === UPLOAD_ERR_OK) {
+        $downloadPath = $downloadDir . basename($_FILES['downloadFile']['name']);
+        if (move_uploaded_file($_FILES['downloadFile']['tmp_name'], $downloadPath)) {
+            $response['downloadUrl'] = $downloadPath;
+        }
+    }
+
+    // Marca la respuesta como exitosa si ambos archivos se cargaron
+    if (isset($response['imgUrl']) && isset($response['downloadUrl'])) {
+        $response['success'] = true;
+    }
+
+    // Enviar respuesta en formato JSON
+    header('Content-Type: application/json');
+    echo json_encode($response);
+}
 ?>
