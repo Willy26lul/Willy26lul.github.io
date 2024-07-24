@@ -1,36 +1,51 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Funcionalidad del carrito (si es necesario)
-    const btnCart = document.querySelector('.container-icon');
-    const containerCartProducts = document.querySelector('.container-cart-products');
+document.getElementById('productForm').addEventListener('submit', function(e) {
+    e.preventDefault();
 
-    if (btnCart && containerCartProducts) {
-        btnCart.addEventListener('click', () => {
-            containerCartProducts.classList.toggle('hidden-cart');
-        });
+    const title = document.getElementById('productTitle').value;
+    const description = document.getElementById('productDescription').value;
+    const imgFile = document.getElementById('productImg').files[0];
+    const downloadFile = document.getElementById('productDownload').files[0];
+
+    if (!title || !description || !imgFile || !downloadFile) {
+        alert('Please fill in all fields');
+        return;
     }
 
-    // Cargar productos desde localStorage
-    const products = JSON.parse(localStorage.getItem('products')) || [];
-    const container = document.getElementById('productContainer');
+    // Subir archivos al servidor y obtener URLs
+    const formData = new FormData();
+    formData.append('imgFile', imgFile);
+    formData.append('downloadFile', downloadFile);
 
-    products.forEach(product => {
-        const itemDiv = document.createElement('div');
-        itemDiv.classList.add('item');
-        itemDiv.innerHTML = `
-            <figure>
-                <a href="product.html?img=${encodeURIComponent(product.imgSrc)}&title=${encodeURIComponent(product.title)}&description=${encodeURIComponent(product.description)}&download=${encodeURIComponent(product.download)}">
-                    <img src="${product.imgSrc}" alt="${product.title}" />
-                </a>
-            </figure>
-            <div class="info-product">
-                <h2>${product.title}</h2>
-                <p class="description hidden">${product.description}</p>
-                <a href="${product.download}" download>
-                    <button>Descargar</button>
-                </a>
-            </div>
-        `;
+    fetch('upload.php', { // Asegúrate de que esta URL sea correcta
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const imgSrc = data.imgUrl; // La URL del archivo de imagen
+            const downloadSrc = data.downloadUrl; // La URL del archivo de descarga
 
-        container.appendChild(itemDiv);
+            const newProduct = {
+                title,
+                description,
+                imgSrc,
+                download: downloadSrc
+            };
+
+            let products = JSON.parse(localStorage.getItem('products')) || [];
+            products.push(newProduct);
+            localStorage.setItem('products', JSON.stringify(products));
+            loadProducts();
+
+            document.getElementById('confirmationMessage').style.display = 'block';
+            document.getElementById('addAnotherProduct').style.display = 'inline';
+        } else {
+            alert('Error uploading files');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error uploading files');
     });
 });
