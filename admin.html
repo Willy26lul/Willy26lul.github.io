@@ -176,21 +176,27 @@
         }
 
         function handleFile(file, input, fileName) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const filePath = `/${file.name}`; // Simulación de una ruta
-                input.dataset.filePath = filePath;
-                fileName.textContent = `File uploaded: ${file.name}`;
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        let filePath = `/${file.name}`; // Default path
 
-                // Mostrar previsualización de la imagen si es un archivo de imagen
-                if (inputId === 'productImg') {
-                    const imgPreview = document.getElementById('imgPreview');
-                    imgPreview.src = e.target.result;
-                    imgPreview.style.display = 'block';
-                }
-            };
-            reader.readAsDataURL(file);
+        if (input.id === 'productImg') {
+            // Asignar la ruta de la carpeta de imágenes
+            filePath = `/Images/${file.name}`;
+            // Mostrar previsualización de la imagen
+            const imgPreview = document.getElementById('imgPreview');
+            imgPreview.src = e.target.result;
+            imgPreview.style.display = 'block';
+        } else if (input.id === 'productDownload') {
+            // Asignar la ruta de la carpeta de archivos descargables
+            filePath = `/rvts/${file.name}`;
         }
+
+        input.dataset.filePath = filePath;
+        fileName.textContent = `File uploaded: ${file.name}`;
+    };
+    reader.readAsDataURL(file);
+}
 
         setupDropzone('imgDropzone', 'productImg', 'imgFileName');
         setupDropzone('downloadDropzone', 'productDownload', 'downloadFileName');
