@@ -7,87 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Products - GalaBlock</title>
     <link rel="stylesheet" href="index.css" />
-    <style>
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background-color: #000000;
-            color: #fff;
-            position: sticky;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-
-        header h1 {
-            font-size: 20px;
-        }
-
-        header a.logo {
-            color: #fff;
-            text-decoration: none;
-            font-weight: 700;
-        }
-
-        header a.logo:hover {
-            text-decoration: underline;
-        }
-
-        nav {
-            display: flex;
-            gap: 15px;
-        }
-
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: 700;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        .container-icon {
-            display: flex;
-            align-items: center;
-        }
-
-        .container-cart-products {
-            display: none; /* or adjust based on your needs */
-        }
-
-        .container-items {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .item {
-            border: 1px solid #ddd;
-            padding: 10px;
-            width: calc(33.333% - 20px);
-            box-sizing: border-box;
-        }
-
-        .item figure {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-
-        .item img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .info-product {
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
     <header>
@@ -97,37 +16,17 @@
         <nav>
             <a href="index.html">Home</a>
             <a href="products.html">Products</a>
-            <!-- Agrega los enlaces de otras páginas si es necesario -->
         </nav>
     </header>
 
     <div class="container-items" id="productContainer">
         <!-- Los productos se generarán aquí automáticamente -->
     </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const products = JSON.parse(localStorage.getItem('products')) || [
-                {
-                    title: 'Ford',
-                    imgSrc: 'Images/Mustanggt500%202.jpg',
-                    description: 'Carro deportivo Ford Mustang GT500',
-                    download: 'rvts/LR_Ford_GT40_10353.rfa'
-                },
-                {
-                    title: 'Concrete Truck',
-                    imgSrc: 'Images/concretetruck4.jpg',
-                    description: 'Camión de concreto',
-                    download: 'rvts/Concrete_Truck_2012.rfa'
-                },
-                {
-                    title: 'Mesa de Cristal',
-                    imgSrc: 'Images/Mesa-de-centro-de-cristal-para-Revit.jpg',
-                    description: 'Mesa de centro de cristal para Revit',
-                    download: 'rvts/Mesa%20de%20centro%20de%20cristal.rfa'
-                }
-            ];
-
             const container = document.getElementById('productContainer');
+            const products = JSON.parse(localStorage.getItem('products')) || [];
 
             products.forEach(product => {
                 const item = document.createElement('div');
