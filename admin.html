@@ -155,24 +155,43 @@
                 return;
             }
 
-            // Create URLs for the files and save them
-            const imgSrc = URL.createObjectURL(imgFile);
-            const downloadSrc = URL.createObjectURL(downloadFile);
+            // Subir archivos al servidor y obtener URLs
+            const formData = new FormData();
+            formData.append('imgFile', imgFile);
+            formData.append('downloadFile', downloadFile);
 
-            const newProduct = {
-                title,
-                description,
-                imgSrc,
-                download: downloadSrc
-            };
+            fetch('upload.php', { // Cambia esto por la URL de tu script de subida
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const imgSrc = data.imgUrl; // La URL del archivo de imagen
+                    const downloadSrc = data.downloadUrl; // La URL del archivo de descarga
 
-            let products = JSON.parse(localStorage.getItem('products')) || [];
-            products.push(newProduct);
-            localStorage.setItem('products', JSON.stringify(products));
-            loadProducts();
+                    const newProduct = {
+                        title,
+                        description,
+                        imgSrc,
+                        download: downloadSrc
+                    };
 
-            document.getElementById('confirmationMessage').style.display = 'block';
-            document.getElementById('addAnotherProduct').style.display = 'inline';
+                    let products = JSON.parse(localStorage.getItem('products')) || [];
+                    products.push(newProduct);
+                    localStorage.setItem('products', JSON.stringify(products));
+                    loadProducts();
+
+                    document.getElementById('confirmationMessage').style.display = 'block';
+                    document.getElementById('addAnotherProduct').style.display = 'inline';
+                } else {
+                    alert('Error uploading files');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error uploading files');
+            });
         });
 
         document.getElementById('imgDropzone').addEventListener('click', function() {
