@@ -1,282 +1,74 @@
-/* Globales */
-*::after,
-*::before,
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products - GalaBlock</title>
+    <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <h1>GALABLOCK</h1>
+        </a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+        </nav>
+    </header>
 
-body {
-    margin: 0 auto;
-    max-width: 1200px;
-    font-family: 'Oswald', sans-serif;
-    color: #333;
-}
+    <div class="container-items" id="productContainer">
+        <!-- Los productos se generarán aquí automáticamente -->
+    </div>
 
-.icon-cart {
-    width: 40px;
-    height: 40px;
-    stroke: #000;
-    display: none;
-}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const products = JSON.parse(localStorage.getItem('products')) || [
+                {
+                    title: 'Ford',
+                    imgSrc: 'Images/Mustanggt500%202.jpg',
+                    description: 'Carro deportivo Ford Mustang GT500',
+                    download: 'rvts/LR_Ford_GT40_10353.rfa'
+                },
+                {
+                    title: 'Concrete Truck',
+                    imgSrc: 'Images/concretetruck4.jpg',
+                    description: 'Camión de concreto',
+                    download: 'rvts/Concrete_Truck_2012.rfa'
+                },
+                {
+                    title: 'Mesa de Cristal',
+                    imgSrc: 'Images/Mesa-de-centro-de-cristal-para-Revit.jpg',
+                    description: 'Mesa de centro de cristal para Revit',
+                    download: 'rvts/Mesa%20de%20centro%20de%20cristal.rfa'
+                }
+            ];
 
-.icon-cart:hover {
-    cursor: pointer;
-}
+            const container = document.getElementById('productContainer');
 
-.item {
-    border-radius: 10px;
-    overflow: hidden;
-    max-width: 300px;
-    height: 300px;
-}
+            products.forEach(product => {
+                const item = document.createElement('div');
+                item.className = 'item';
 
-.item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 10px 10px 0 0;
-    transition: all .5s;
-}
+                item.innerHTML = `
+                    <figure>
+                        <a href="product.html?img=${encodeURIComponent(product.imgSrc)}&title=${encodeURIComponent(product.title)}&description=${encodeURIComponent(product.description)}&download=${encodeURIComponent(product.download)}">
+                            <img src="${product.imgSrc}" alt="${product.title}" />
+                        </a>
+                    </figure>
+                    <div class="info-product">
+                        <h2>${product.title}</h2>
+                        <a href="${product.download}" download="${product.download.split('/').pop()}">
+                            <button>Descargar</button>
+                        </a>
+                    </div>
+                `;
 
-header {
-    display: flex;
-    justify-content: center; /* Center the content horizontally */
-    align-items: center;
-    padding: 20px;
-    background-color: #000000;
-    color: #fff;
-    position: sticky;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-}
-
-header h1 {
-    color: #fff;
-    font-family: 'Oswald', sans-serif;
-    margin: 0;
-}
-
-header .logo {
-    margin-right: auto; /* Push the logo to the left */
-}
-
-nav {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-
-nav a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 700;
-}
-
-nav a:hover {
-    text-decoration: underline;
-}
-
-.container-icon {
-    position: relative;
-}
-
-.count-products {
-    position: absolute;
-    top: 55%;
-    right: 0;
-    background-color: #000;
-    color: #fff;
-    width: 25px;
-    height: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-}
-
-#contador-productos {
-    font-size: 12px;
-}
-
-.container-cart-products {
-    position: absolute;
-    top: 50px;
-    right: 0;
-    background-color: #fff;
-    width: 400px;
-    z-index: 1;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.20);
-    border-radius: 10px;
-}
-
-.cart-product {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 30px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.20);
-}
-
-.info-cart-product {
-    display: flex;
-    justify-content: space-between;
-    flex: 0.8;
-}
-
-.titulo-producto-carrito {
-    font-size: 20px;
-}
-
-.precio-producto-carrito {
-    font-weight: 700;
-    font-size: 20px;
-    margin-left: 10px;
-}
-
-.cantidad-producto-carrito {
-    font-weight: 400;
-    font-size: 20px;
-}
-
-.icon-close {
-    width: 25px;
-    height: 25px;
-}
-
-.icon-close:hover {
-    stroke: red;
-    cursor: pointer;
-}
-
-.cart-total {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 0;
-    gap: 20px;
-}
-
-.cart-total h3 {
-    font-size: 20px;
-    font-weight: 700;
-}
-
-.total-pagar {
-    font-size: 20px;
-    font-weight: 900;
-}
-
-.hidden-cart {
-    display: none;
-}
-
-.container-items {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-top: 100px;
-}
-
-.item {
-    border-radius: 10px;
-}
-
-.item:hover {
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.20);
-}
-
-.item figure {
-    overflow: hidden;
-}
-
-.item:hover img {
-    transform: scale(1.2);
-}
-
-.info-product {
-    padding: 15px 30px;
-    line-height: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    font-family: 'Oswald', sans-serif;
-}
-
-.price {
-    font-size: 18px;
-    font-weight: 900;
-    font-family: 'Oswald', sans-serif;
-}
-
-.info-product button {
-    border: none;
-    background: none;
-    background-color: #000;
-    color: #fff;
-    padding: 15px 10px;
-    cursor: pointer;
-    width: 100%; /* Ensures the button spans the full width of the container */
-}
-
-.hidden-price {
-    display: none;
-}
-
-h1, h2, p, button {
-    font-family: 'Oswald', sans-serif;
-}
-
-.product-detail {
-    margin-top: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-.product-detail figure {
-    width: 300px;
-    height: 300px;
-    overflow: hidden;
-    border-radius: 10px;
-}
-
-.product-detail img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.product-detail .info-product {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-.product-detail h2 {
-    font-size: 24px;
-    font-weight: 700;
-}
-
-.product-detail p {
-    font-size: 16px;
-    text-align: center;
-}
-
-.product-detail button {
-    border: none;
-    background: none;
-    background-color: #000;
-    color: #fff;
-    padding: 15px 10px;
-    cursor: pointer;
-}
-<style>
-    .description.hidden {
-        display: none;
-    }
-</style>
+                container.appendChild(item);
+            });
+        });
+    </script>
+</body>
+</html>
