@@ -72,7 +72,7 @@
     </div>
 
     <script>
-        const correctPassword = 'admin123'; // Change this to your desired password
+        const correctPassword = 'admin123';
 
         function checkPassword() {
             const password = document.getElementById('adminPassword').value;
@@ -170,7 +170,7 @@
         function handleFile(file, input, fileName) {
             const reader = new FileReader();
             reader.onload = function (e) {
-                const filePath = `/${file.name}`; // Replace this with actual upload logic
+                const filePath = `/${file.name}`; // Simulación de una ruta
                 input.dataset.filePath = filePath;
                 fileName.textContent = `File uploaded: ${file.name}`;
             };
