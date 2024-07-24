@@ -31,6 +31,10 @@
             resize: none;
             overflow-y: auto;
         }
+        .preview-img {
+            max-width: 100%;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -59,9 +63,10 @@
             <div class="dropzone" id="imgDropzone">Drag & Drop Image Here or Click to Upload</div>
             <input type="file" id="productImg" accept="image/*" style="display: none;" required>
             <div class="file-name" id="imgFileName"></div>
+            <img id="imgPreview" class="preview-img" src="" alt="Image Preview" style="display:none;">
 
-            <div class="dropzone" id="downloadDropzone">Drag & Drop Downloadable File Here or Click to Upload</div>
-            <input type="file" id="productDownload" accept=".rfa" style="display: none;" required>
+            <div class="dropzone" id="downloadDropzone">Drag & Drop File Here or Click to Upload</div>
+            <input type="file" id="productDownload" style="display: none;" required>
             <div class="file-name" id="downloadFileName"></div>
 
             <button type="submit">Add Product</button>
@@ -127,6 +132,7 @@
             document.getElementById('productForm').reset();
             document.getElementById('confirmationMessage').style.display = 'block';
             document.getElementById('addAnotherProduct').style.display = 'block';
+            document.getElementById('imgPreview').style.display = 'none';
             loadProducts();
         });
 
@@ -136,6 +142,8 @@
             document.getElementById('addAnotherProduct').style.display = 'none';
             document.getElementById('imgFileName').textContent = '';
             document.getElementById('downloadFileName').textContent = '';
+            document.getElementById('imgPreview').src = '';
+            document.getElementById('imgPreview').style.display = 'none';
         }
 
         function setupDropzone(dropzoneId, inputId, fileNameId) {
@@ -173,6 +181,13 @@
                 const filePath = `/${file.name}`; // Simulación de una ruta
                 input.dataset.filePath = filePath;
                 fileName.textContent = `File uploaded: ${file.name}`;
+
+                // Mostrar previsualización de la imagen si es un archivo de imagen
+                if (inputId === 'productImg') {
+                    const imgPreview = document.getElementById('imgPreview');
+                    imgPreview.src = e.target.result;
+                    imgPreview.style.display = 'block';
+                }
             };
             reader.readAsDataURL(file);
         }
