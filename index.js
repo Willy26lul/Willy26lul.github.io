@@ -11,12 +11,11 @@ document.getElementById('productForm').addEventListener('submit', function(e) {
         return;
     }
 
-    // Subir archivos al servidor y obtener URLs
     const formData = new FormData();
     formData.append('imgFile', imgFile);
     formData.append('downloadFile', downloadFile);
 
-    fetch('upload.php', { // Asegúrate de que esta URL sea correcta
+    fetch('upload.php', {
         method: 'POST',
         body: formData
     })
@@ -38,14 +37,17 @@ document.getElementById('productForm').addEventListener('submit', function(e) {
             localStorage.setItem('products', JSON.stringify(products));
             loadProducts();
 
+            document.getElementById('confirmationMessage').textContent = 'File uploaded successfully!';
             document.getElementById('confirmationMessage').style.display = 'block';
             document.getElementById('addAnotherProduct').style.display = 'inline';
         } else {
-            alert('Error uploading files');
+            document.getElementById('confirmationMessage').textContent = data.error || 'Error uploading files';
+            document.getElementById('confirmationMessage').style.display = 'block';
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('Error uploading files');
+        document.getElementById('confirmationMessage').textContent = 'Error uploading files';
+        document.getElementById('confirmationMessage').style.display = 'block';
     });
 });
