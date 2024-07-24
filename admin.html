@@ -1,1 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - GalaBlock</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo">
+            <h1>GALABLOCK</h1>
+        </a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+        </nav>
+    </header>
+
+    <div class="admin-login" id="adminLogin">
+        <h2>Admin Login</h2>
+        <input type="password" id="adminPassword" placeholder="Enter password">
+        <button onclick="checkPassword()">Login</button>
+    </div>
+
+    <div class="admin-panel" id="adminPanel" style="display: none;">
+        <h2>Admin Panel</h2>
+        <form id="productForm">
+            <input type="text" id="productTitle" placeholder="Product Title" required>
+            <input type="text" id="productImg" placeholder="Image URL" required>
+            <input type="text" id="productDescription" placeholder="Description" required>
+            <input type="text" id="productDownload" placeholder="Download URL" required>
+            <button type="submit">Add Product</button>
+        </form>
+        <div id="productList"></div>
+    </div>
+
+    <script>
+        const correctPassword = 'admin123'; // Change this to your desired password
+
+        function checkPassword() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === correctPassword) {
+                document.getElementById('adminLogin').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                loadProducts();
+            } else {
+                alert('Incorrect password');
+            }
+        }
+
+        function loadProducts() {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
+
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+
+            products.forEach((product, index) => {
+                const productItem = document.createElement('div');
+                productItem.innerHTML = `
+                    <h3>${product.title}</h3>
+                    <p>${product.description}</p>
+                    <img src="${product.imgSrc}" alt="${product.title}" style="width: 100px;">
+                    <a href="${product.download}" download>Download</a>
+                    <button onclick="deleteProduct(${index})">Delete</button>
+                `;
+                productList.appendChild(productItem);
+            });
+        }
+
+        function deleteProduct(index) {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            products.splice(index, 1);
+            localStorage.setItem('products', JSON.stringify(products));
+            loadProducts();
+        }
+
+        document.getElementById('productForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const title = document.getElementById('productTitle').value;
+            const imgSrc = document.getElementById('productImg').value;
+            const description = document.getElementById('productDescription').value;
+            const download = document.getElementById('productDownload').value;
+
+            const newProduct = { title, imgSrc, description, download };
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            products.push(newProduct);
+            localStorage.setItem('products', JSON.stringify(products));
+
+            document.getElementById('productForm').reset();
+            loadProducts();
+        });
+    </script>
+</body>
+</html>
 
