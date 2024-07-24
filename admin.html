@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - GalaBlock</title>
     <link rel="stylesheet" href="index.css">
+    <style>
+        .dropzone {
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .dropzone.dragover {
+            background-color: #e3e3e3;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -27,9 +39,14 @@
         <h2>Admin Panel</h2>
         <form id="productForm">
             <input type="text" id="productTitle" placeholder="Product Title" required>
-            <input type="text" id="productImg" placeholder="Image URL" required>
             <input type="text" id="productDescription" placeholder="Description" required>
-            <input type="text" id="productDownload" placeholder="Download URL" required>
+
+            <div class="dropzone" id="imgDropzone">Drag & Drop Image Here or Click to Upload</div>
+            <input type="file" id="productImg" accept="image/*" style="display: none;" required>
+
+            <div class="dropzone" id="downloadDropzone">Drag & Drop Downloadable File Here or Click to Upload</div>
+            <input type="file" id="productDownload" accept=".rvt" style="display: none;" required>
+
             <button type="submit">Add Product</button>
         </form>
         <div id="productList"></div>
@@ -79,9 +96,9 @@
             e.preventDefault();
 
             const title = document.getElementById('productTitle').value;
-            const imgSrc = document.getElementById('productImg').value;
             const description = document.getElementById('productDescription').value;
-            const download = document.getElementById('productDownload').value;
+            const imgSrc = document.getElementById('productImg').dataset.filePath;
+            const download = document.getElementById('productDownload').dataset.filePath;
 
             const newProduct = { title, imgSrc, description, download };
             const products = JSON.parse(localStorage.getItem('products')) || [];
@@ -91,7 +108,47 @@
             document.getElementById('productForm').reset();
             loadProducts();
         });
+
+        function setupDropzone(dropzoneId, inputId) {
+            const dropzone = document.getElementById(dropzoneId);
+            const input = document.getElementById(inputId);
+
+            dropzone.addEventListener('click', () => input.click());
+
+            dropzone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropzone.classList.add('dragover');
+            });
+
+            dropzone.addEventListener('dragleave', () => {
+                dropzone.classList.remove('dragover');
+            });
+
+            dropzone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropzone.classList.remove('dragover');
+                const file = e.dataTransfer.files[0];
+                handleFile(file, input);
+            });
+
+            input.addEventListener('change', () => {
+                const file = input.files[0];
+                handleFile(file, input);
+            });
+        }
+
+        function handleFile(file, input) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const filePath = `/${file.name}`; // Replace this with actual upload logic
+                input.dataset.filePath = filePath;
+                alert(`File uploaded: ${filePath}`);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        setupDropzone('imgDropzone', 'productImg');
+        setupDropzone('downloadDropzone', 'productDownload');
     </script>
 </body>
 </html>
-
