@@ -12,9 +12,24 @@
             padding: 20px;
             text-align: center;
             margin-bottom: 10px;
+            cursor: pointer;
         }
         .dropzone.dragover {
             background-color: #e3e3e3;
+        }
+        .file-name {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        #productTitle, #productDescription {
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        #productDescription {
+            height: 100px;
+            resize: none;
+            overflow-y: auto;
         }
     </style>
 </head>
@@ -39,16 +54,20 @@
         <h2>Admin Panel</h2>
         <form id="productForm">
             <input type="text" id="productTitle" placeholder="Product Title" required>
-            <input type="text" id="productDescription" placeholder="Description" required>
+            <textarea id="productDescription" placeholder="Description" required></textarea>
 
             <div class="dropzone" id="imgDropzone">Drag & Drop Image Here or Click to Upload</div>
             <input type="file" id="productImg" accept="image/*" style="display: none;" required>
+            <div class="file-name" id="imgFileName"></div>
 
             <div class="dropzone" id="downloadDropzone">Drag & Drop Downloadable File Here or Click to Upload</div>
             <input type="file" id="productDownload" accept=".rvt" style="display: none;" required>
+            <div class="file-name" id="downloadFileName"></div>
 
             <button type="submit">Add Product</button>
         </form>
+        <div id="confirmationMessage" style="display:none;">Product added successfully!</div>
+        <button id="addAnotherProduct" style="display:none;" onclick="resetForm()">Add Another Product</button>
         <div id="productList"></div>
     </div>
 
@@ -106,12 +125,23 @@
             localStorage.setItem('products', JSON.stringify(products));
 
             document.getElementById('productForm').reset();
+            document.getElementById('confirmationMessage').style.display = 'block';
+            document.getElementById('addAnotherProduct').style.display = 'block';
             loadProducts();
         });
 
-        function setupDropzone(dropzoneId, inputId) {
+        function resetForm() {
+            document.getElementById('productForm').reset();
+            document.getElementById('confirmationMessage').style.display = 'none';
+            document.getElementById('addAnotherProduct').style.display = 'none';
+            document.getElementById('imgFileName').textContent = '';
+            document.getElementById('downloadFileName').textContent = '';
+        }
+
+        function setupDropzone(dropzoneId, inputId, fileNameId) {
             const dropzone = document.getElementById(dropzoneId);
             const input = document.getElementById(inputId);
+            const fileName = document.getElementById(fileNameId);
 
             dropzone.addEventListener('click', () => input.click());
 
@@ -128,27 +158,27 @@
                 e.preventDefault();
                 dropzone.classList.remove('dragover');
                 const file = e.dataTransfer.files[0];
-                handleFile(file, input);
+                handleFile(file, input, fileName);
             });
 
             input.addEventListener('change', () => {
                 const file = input.files[0];
-                handleFile(file, input);
+                handleFile(file, input, fileName);
             });
         }
 
-        function handleFile(file, input) {
+        function handleFile(file, input, fileName) {
             const reader = new FileReader();
             reader.onload = function (e) {
                 const filePath = `/${file.name}`; // Replace this with actual upload logic
                 input.dataset.filePath = filePath;
-                alert(`File uploaded: ${filePath}`);
+                fileName.textContent = `File uploaded: ${file.name}`;
             };
             reader.readAsDataURL(file);
         }
 
-        setupDropzone('imgDropzone', 'productImg');
-        setupDropzone('downloadDropzone', 'productDownload');
+        setupDropzone('imgDropzone', 'productImg', 'imgFileName');
+        setupDropzone('downloadDropzone', 'productDownload', 'downloadFileName');
     </script>
 </body>
 </html>
