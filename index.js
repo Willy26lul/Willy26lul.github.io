@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Funcionalidad del carrito
+    // Funcionalidad del carrito (si es necesario)
     const btnCart = document.querySelector('.container-icon');
     const containerCartProducts = document.querySelector('.container-cart-products');
 
@@ -9,38 +9,28 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Carga de productos desde el CSV
-    Papa.parse('products.csv', {
-        download: true,
-        header: true,
-        complete: function(results) {
-            console.log('CSV data loaded:', results.data); // Verificar si los datos se cargan correctamente
-            const container = document.getElementById('product-container');
+    // Cargar productos desde localStorage
+    const products = JSON.parse(localStorage.getItem('products')) || [];
+    const container = document.getElementById('productContainer');
 
-            results.data.forEach(product => {
-                // Crear y agregar los elementos de producto
-                const itemDiv = document.createElement('div');
-                itemDiv.classList.add('item');
-                itemDiv.innerHTML = `
-                    <figure>
-                        <a href="product.html?img=${encodeURIComponent(product['Ruta Image Reference'])}&title=${encodeURIComponent(product.Title)}&description=${encodeURIComponent(product.Description)}&download=${encodeURIComponent(product.RutaDescarga)}" data-description="${product.Description}">
-                            <img src="${product['Ruta Image Reference']}" alt="${product.Title}" />
-                        </a>
-                    </figure>
-                    <div class="info-product">
-                        <h2>${product.Title}</h2>
-                        <p class="description hidden">${product.Description}</p>
-                        <a href="${product.RutaDescarga}" download="${product.RutaDescarga}">
-                            <button>Descargar</button>
-                        </a>
-                    </div>
-                `;
+    products.forEach(product => {
+        const itemDiv = document.createElement('div');
+        itemDiv.classList.add('item');
+        itemDiv.innerHTML = `
+            <figure>
+                <a href="product.html?img=${encodeURIComponent(product.imgSrc)}&title=${encodeURIComponent(product.title)}&description=${encodeURIComponent(product.description)}&download=${encodeURIComponent(product.download)}">
+                    <img src="${product.imgSrc}" alt="${product.title}" />
+                </a>
+            </figure>
+            <div class="info-product">
+                <h2>${product.title}</h2>
+                <p class="description hidden">${product.description}</p>
+                <a href="${product.download}" download="${product.download}">
+                    <button>Descargar</button>
+                </a>
+            </div>
+        `;
 
-                container.appendChild(itemDiv);
-            });
-        },
-        error: function(error) {
-            console.error('Error loading CSV:', error); // Mostrar errores en la carga del CSV
-        }
+        container.appendChild(itemDiv);
     });
 });
