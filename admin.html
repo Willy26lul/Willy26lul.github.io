@@ -9,12 +9,6 @@
         .admin-panel {
             padding: 20px;
         }
-        .product-item {
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-        }
         .dropzone {
             border: 2px dashed #ddd;
             padding: 20px;
@@ -64,10 +58,10 @@
         </form>
         <div id="confirmationMessage" style="display:none;">File uploaded successfully!</div>
         <button id="addAnotherProduct" style="display:none;" onclick="resetForm()">Add Another Product</button>
-        <div id="productList"></div>
     </div>
 
     <script>
+        // Previsualización de imagen y archivo
         document.getElementById('imgDropzone').addEventListener('click', function() {
             document.getElementById('productImg').click();
         });
@@ -92,6 +86,7 @@
             }
         });
 
+        // Gestión del formulario de subida
         document.getElementById('productForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
@@ -105,6 +100,7 @@
                 return;
             }
 
+            // Leer archivos y convertir a base64
             const reader = new FileReader();
             reader.onload = function(event) {
                 const imgSrc = event.target.result;
@@ -134,33 +130,6 @@
             reader.readAsDataURL(imgFile);
         });
 
-        function loadProducts() {
-            const productList = document.getElementById('productList');
-            productList.innerHTML = '';
-
-            const products = JSON.parse(localStorage.getItem('products')) || [];
-
-            products.forEach((product, index) => {
-                const productItem = document.createElement('div');
-                productItem.className = 'product-item';
-                productItem.innerHTML = `
-                    <h3>${product.title}</h3>
-                    <p>${product.description}</p>
-                    <img src="${product.imgSrc}" alt="${product.title}">
-                    <a href="${product.download}" download>Download</a>
-                    <button onclick="deleteProduct(${index})">Delete</button>
-                `;
-                productList.appendChild(productItem);
-            });
-        }
-
-        function deleteProduct(index) {
-            const products = JSON.parse(localStorage.getItem('products')) || [];
-            products.splice(index, 1);
-            localStorage.setItem('products', JSON.stringify(products));
-            loadProducts();
-        }
-
         function resetForm() {
             document.getElementById('productForm').reset();
             document.getElementById('imgPreview').style.display = 'none';
@@ -170,7 +139,10 @@
             document.getElementById('addAnotherProduct').style.display = 'none';
         }
 
-        // Cargar productos al inicio
+        function loadProducts() {
+            // Código para cargar productos si es necesario en admin.html
+        }
+
         document.addEventListener('DOMContentLoaded', loadProducts);
     </script>
 </body>
