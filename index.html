@@ -1,12 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Products - GalaBlock</title>
-    <link rel="stylesheet" href="index.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - GalaBlock</title>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .admin-panel {
+            padding: 20px;
+        }
+        .product-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .product-item img {
+            max-width: 100px;
+        }
+        .dropzone {
+            border: 2px dashed #ddd;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .preview-img {
+            max-width: 200px;
+            display: block;
+            margin-top: 10px;
+        }
+        #errorMessage {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -19,37 +47,160 @@
         </nav>
     </header>
 
-    <div class="container-items" id="productContainer">
-        <!-- Los productos se generarán aquí automáticamente -->
+    <div class="admin-login" id="adminLogin">
+        <h2>Admin Login</h2>
+        <input type="password" id="adminPassword" placeholder="Enter password">
+        <button onclick="checkPassword()">Login</button>
+    </div>
+
+    <div class="admin-panel" id="adminPanel" style="display: none;">
+        <h2>Admin Panel</h2>
+        <form id="productForm">
+            <input type="text" id="productTitle" placeholder="Product Title" required>
+            <textarea id="productDescription" placeholder="Description" required></textarea>
+
+            <div class="dropzone" id="imgDropzone">Drag & Drop Image Here or Click to Upload</div>
+            <input type="file" id="productImg" accept="image/*" style="display: none;" required>
+            <div class="file-name" id="imgFileName"></div>
+            <img id="imgPreview" class="preview-img" src="" alt="Image Preview" style="display:none;">
+
+            <div class="dropzone" id="downloadDropzone">Drag & Drop File Here or Click to Upload</div>
+            <input type="file" id="productDownload" style="display: none;" required>
+            <div class="file-name" id="downloadFileName"></div>
+
+            <button type="submit">Add Product</button>
+            <div id="errorMessage"></div>
+        </form>
+        <div id="confirmationMessage" style="display:none;">File uploaded successfully!</div>
+        <button id="addAnotherProduct" style="display:none;" onclick="resetForm()">Add Another Product</button>
+        <div id="productList"></div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const container = document.getElementById('productContainer');
+        const correctPassword = 'admin123';
+
+        function checkPassword() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === correctPassword) {
+                document.getElementById('adminLogin').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                loadProducts();
+            } else {
+                alert('Incorrect password');
+            }
+        }
+
+        function loadProducts() {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
+
             const products = JSON.parse(localStorage.getItem('products')) || [];
 
-            products.forEach(product => {
-                const item = document.createElement('div');
-                item.className = 'item';
-
-                item.innerHTML = `
-                    <figure>
-                        <a href="product.html?img=${encodeURIComponent(product.imgSrc)}&title=${encodeURIComponent(product.title)}&description=${encodeURIComponent(product.description)}&download=${encodeURIComponent(product.download)}">
-                            <img src="${product.imgSrc}" alt="${product.title}" />
-                        </a>
-                    </figure>
-                    <div class="info-product">
-                        <h2>${product.title}</h2>
-                        <p class="price hidden-price"></p>
-                        <a href="${product.download}" download="${product.download.split('/').pop()}">
-                            <button>Descargar</button>
-                        </a>
-                    </div>
+            products.forEach((product, index) => {
+                const productItem = document.createElement('div');
+                productItem.className = 'product-item';
+                productItem.innerHTML = `
+                    <h3>${product.title}</h3>
+                    <p>${product.description}</p>
+                    <img src="${product.imgSrc}" alt="${product.title}">
+                    <a href="${product.download}" download>Download</a>
+                    <button onclick="editProduct(${index})">Edit</button>
+                    <button onclick="deleteProduct(${index})">Delete</button>
                 `;
+                productList.appendChild(productItem);
+            });
+        }
 
-                container.appendChild(item);
+        function deleteProduct(index) {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            products.splice(index, 1);
+            localStorage.setItem('products', JSON.stringify(products));
+            loadProducts();
+        }
+
+        document.getElementById('productForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const title = document.getElementById('productTitle').value;
+            const description = document.getElementById('productDescription').value;
+            const imgFile = document.getElementById('productImg').files[0];
+            const downloadFile = document.getElementById('productDownload').files[0];
+
+            if (!title || !description || !imgFile || !downloadFile) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('imgFile', imgFile);
+            formData.append('downloadFile', downloadFile);
+
+            fetch('upload.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const errorMessage = document.getElementById('errorMessage');
+                if (data.success) {
+                    const imgSrc = data.imgUrl;
+                    const downloadSrc = data.downloadUrl;
+
+                    const newProduct = {
+                        title,
+                        description,
+                        imgSrc,
+                        download: downloadSrc
+                    };
+
+                    let products = JSON.parse(localStorage.getItem('products')) || [];
+                    products.push(newProduct);
+                    localStorage.setItem('products', JSON.stringify(products));
+                    loadProducts();
+
+                    document.getElementById('confirmationMessage').style.display = 'block';
+                    document.getElementById('addAnotherProduct').style.display = 'inline';
+                    errorMessage.textContent = ''; // Clear previous error messages
+                } else {
+                    errorMessage.textContent = data.error || 'Error uploading files';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('errorMessage').textContent = 'Error uploading files';
             });
         });
+
+        document.getElementById('imgDropzone').addEventListener('click', function() {
+            document.getElementById('productImg').click();
+        });
+
+        document.getElementById('downloadDropzone').addEventListener('click', function() {
+            document.getElementById('productDownload').click();
+        });
+
+        document.getElementById('productImg').addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                document.getElementById('imgPreview').style.display = 'block';
+                document.getElementById('imgPreview').src = URL.createObjectURL(file);
+                document.getElementById('imgFileName').textContent = `Image: ${file.name}`;
+            }
+        });
+
+        document.getElementById('productDownload').addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                document.getElementById('downloadFileName').textContent = `Download: ${file.name}`;
+            }
+        });
+
+        function resetForm() {
+            document.getElementById('productForm').reset();
+            document.getElementById('imgPreview').style.display = 'none';
+            document.getElementById('imgFileName').textContent = '';
+            document.getElementById('downloadFileName').textContent = '';
+        }
     </script>
 </body>
 </html>
