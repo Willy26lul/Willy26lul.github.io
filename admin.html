@@ -1,149 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - GalaBlock</title>
-    <link rel="stylesheet" href="index.css">
+    <title>Panel de Administración</title>
     <style>
-        .admin-panel {
-            padding: 20px;
+        #upload-form {
+            width: 300px;
+            margin: 20px auto;
         }
-        .dropzone {
-            border: 2px dashed #ddd;
-            padding: 20px;
-            text-align: center;
+        input[type="file"] {
             margin-bottom: 10px;
-            cursor: pointer;
-        }
-        .preview-img {
-            max-width: 200px;
-            display: block;
-            margin-top: 10px;
-        }
-        #errorMessage {
-            color: red;
-            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <header>
-        <a href="index.html" class="logo">
-            <h1>GALABLOCK</h1>
-        </a>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="products.html">Products</a>
-        </nav>
-    </header>
+    <h1>Panel de Administración</h1>
+    <form id="upload-form">
+        <label for="downloadable-files">Selecciona archivos descargables:</label>
+        <input type="file" id="downloadable-files" name="downloadable-files" multiple>
+        <label for="image-files">Selecciona imágenes:</label>
+        <input type="file" id="image-files" name="image-files" multiple>
+        <button type="button" onclick="uploadFiles()">Subir Archivos</button>
+    </form>
 
-    <div class="admin-panel" id="adminPanel">
-        <h2>Admin Panel</h2>
-        <form id="productForm">
-            <input type="text" id="productTitle" placeholder="Product Title" required>
-            <textarea id="productDescription" placeholder="Description" required></textarea>
-
-            <div class="dropzone" id="imgDropzone">Drag & Drop Image Here or Click to Upload</div>
-            <input type="file" id="productImg" accept="image/*" style="display: none;" required>
-            <div class="file-name" id="imgFileName"></div>
-            <img id="imgPreview" class="preview-img" src="" alt="Image Preview" style="display:none;">
-
-            <div class="dropzone" id="downloadDropzone">Drag & Drop File Here or Click to Upload</div>
-            <input type="file" id="productDownload" style="display: none;" required>
-            <div class="file-name" id="downloadFileName"></div>
-
-            <button type="submit">Add Product</button>
-            <div id="errorMessage"></div>
-        </form>
-        <div id="confirmationMessage" style="display:none;">File uploaded successfully!</div>
-        <button id="addAnotherProduct" style="display:none;" onclick="resetForm()">Add Another Product</button>
-    </div>
+    <p id="message"></p>
 
     <script>
-        // Previsualización de imagen y archivo
-        document.getElementById('imgDropzone').addEventListener('click', function() {
-            document.getElementById('productImg').click();
-        });
+        async function uploadFiles() {
+            const downloadableFiles = document.getElementById('downloadable-files').files;
+            const imageFiles = document.getElementById('image-files').files;
+            const message = document.getElementById('message');
 
-        document.getElementById('downloadDropzone').addEventListener('click', function() {
-            document.getElementById('productDownload').click();
-        });
-
-        document.getElementById('productImg').addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                document.getElementById('imgPreview').style.display = 'block';
-                document.getElementById('imgPreview').src = URL.createObjectURL(file);
-                document.getElementById('imgFileName').textContent = `Image: ${file.name}`;
-            }
-        });
-
-        document.getElementById('productDownload').addEventListener('change', function() {
-            const file = this.files[0];
-            if (file) {
-                document.getElementById('downloadFileName').textContent = `Download: ${file.name}`;
-            }
-        });
-
-        // Gestión del formulario de subida
-        document.getElementById('productForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const title = document.getElementById('productTitle').value;
-            const description = document.getElementById('productDescription').value;
-            const imgFile = document.getElementById('productImg').files[0];
-            const downloadFile = document.getElementById('productDownload').files[0];
-
-            if (!title || !description || !imgFile || !downloadFile) {
-                alert('Please fill in all fields');
+            if (downloadableFiles.length === 0 && imageFiles.length === 0) {
+                message.textContent = 'Selecciona al menos un archivo.';
                 return;
             }
 
-            // Leer archivos y convertir a base64
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const imgSrc = event.target.result;
+            // Muestra un mensaje mientras se suben los archivos
+            message.textContent = 'Subiendo archivos...';
 
-                const reader2 = new FileReader();
-                reader2.onload = function(event2) {
-                    const downloadSrc = event2.target.result;
+            // Llama a tu servidor backend para manejar la carga
+            // O puedes configurar GitHub Actions para manejar la carga mediante un commit.
 
-                    const newProduct = {
-                        title,
-                        description,
-                        imgSrc,
-                        download: downloadSrc
-                    };
+            // Enviar archivos al servidor (esto es solo un ejemplo, necesitarás un backend para esto)
+            const formData = new FormData();
+            for (const file of downloadableFiles) {
+                formData.append('downloadable-files', file);
+            }
+            for (const file of imageFiles) {
+                formData.append('image-files', file);
+            }
 
-                    let products = JSON.parse(localStorage.getItem('products')) || [];
-                    products.push(newProduct);
-                    localStorage.setItem('products', JSON.stringify(products));
-                    loadProducts();
+            // Ejemplo de cómo podrías enviar los archivos a tu servidor
+            // Ajusta la URL según el servicio que estés usando
+            // await fetch('https://tu-servidor.com/upload', {
+            //     method: 'POST',
+            //     body: formData
+            // });
 
-                    document.getElementById('confirmationMessage').style.display = 'block';
-                    document.getElementById('addAnotherProduct').style.display = 'inline';
-                    document.getElementById('errorMessage').textContent = ''; // Clear previous error messages
-                };
-                reader2.readAsDataURL(downloadFile);
-            };
-            reader.readAsDataURL(imgFile);
-        });
-
-        function resetForm() {
-            document.getElementById('productForm').reset();
-            document.getElementById('imgPreview').style.display = 'none';
-            document.getElementById('imgFileName').textContent = '';
-            document.getElementById('downloadFileName').textContent = '';
-            document.getElementById('confirmationMessage').style.display = 'none';
-            document.getElementById('addAnotherProduct').style.display = 'none';
+            // Por ahora, solo muestra un mensaje de éxito
+            message.textContent = 'Archivos subidos con éxito (simulado).';
         }
-
-        function loadProducts() {
-            // Código para cargar productos si es necesario en admin.html
-        }
-
-        document.addEventListener('DOMContentLoaded', loadProducts);
     </script>
 </body>
 </html>
