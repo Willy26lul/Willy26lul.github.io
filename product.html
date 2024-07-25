@@ -5,15 +5,71 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Detalles del Producto - GalaBlock</title>
+    <title>Products - GalaBlock</title>
     <link rel="stylesheet" href="index.css" />
     <style>
-        /* Puedes agregar estilos específicos para la página del producto aquí */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #000000;
+            color: #fff;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 20px;
+        }
+
+        header a.logo {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        header a.logo:hover {
+            text-decoration: underline;
+        }
+
+        nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container-icon {
+            display: flex;
+            align-items: center;
+        }
+
+        .container-cart-products {
+            display: none; /* or adjust based on your needs */
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>GALABLOCK</h1>
+        <a href="index.html" class="logo">
+            <h1>GALABLOCK</h1>
+        </a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <!-- Agrega los enlaces de otras páginas si es necesario -->
+        </nav>
         <div class="container-icon">
             <svg class="icon-cart" viewBox="0 0 24 24">
                 <!-- SVG content for cart icon -->
@@ -24,41 +80,36 @@
         </div>
     </header>
 
-    <div class="product-detail">
-        <figure>
-            <img src="" alt="Product Image" />
-        </figure>
-        <div class="info-product">
-            <h2></h2>
-            <p class="description"></p>
-            <a href="" download>
-                <button>Descargar</button>
-            </a>
+    <div class="container-items">
+        <div class="item">
+            <figure>
+                <a href="product.html?img=Images/Mustanggt500%202.jpg&title=Ford&download=rvts/LR_Ford_GT40_10353.rfa">
+                    <img src="Images/Mustanggt500%202.jpg" alt="Mustanggt500" />
+                </a>
+            </figure>
+            <div class="info-product">
+                <h2>Ford</h2>
+                <p class="price hidden-price"></p>
+                <a href="rvts/LR_Ford_GT40_10353.rfa" download="rvts/LR_Ford_GT40_10353.rfa">
+                    <button>Descargar</button>
+                </a>
+            </div>
+        </div>
+        <div class="item">
+            <figure>
+                <a href="product.html?img=Images/concretetruck4.jpg&title=Concrete%20Truck&download=rvts/Concrete_Truck_2012.rfa">
+                    <img src="Images/concretetruck4.jpg" alt="Concrete Truck" />
+                </a>
+            </figure>
+            <div class="info-product">
+                <h2>Concrete Truck</h2>
+                <p class="price hidden-price"></p>
+                <a href="rvts/Concrete_Truck_2012.rfa" download="rvts/Concrete_Truck_2012.rfa">
+                    <button>Descargar</button>
+                </a>
+            </div>
         </div>
     </div>
-
     <script src="index.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const params = new URLSearchParams(window.location.search);
-            const img = params.get('img');
-            const title = params.get('title');
-            const download = params.get('download');
-            
-            if (img && title && download) {
-                const imgElement = document.querySelector('.product-detail img');
-                const titleElement = document.querySelector('.product-detail h2');
-                const downloadLink = document.querySelector('.product-detail a');
-                const descriptionElement = document.querySelector('.product-detail .description');
-
-                if (imgElement) imgElement.src = img;
-                if (titleElement) titleElement.textContent = title;
-                if (downloadLink) downloadLink.href = download;
-
-                // Agregar una descripción de ejemplo; puedes modificar esto según lo que necesites
-                if (descriptionElement) descriptionElement.textContent = "Aquí puedes agregar una descripción detallada del producto, incluyendo características, especificaciones y cualquier otra información relevante.";
-            }
-        });
-    </script>
 </body>
 </html>
