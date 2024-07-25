@@ -15,9 +15,6 @@
             margin-bottom: 10px;
             border-radius: 5px;
         }
-        .product-item img {
-            max-width: 100px;
-        }
         .dropzone {
             border: 2px dashed #ddd;
             padding: 20px;
@@ -47,13 +44,7 @@
         </nav>
     </header>
 
-    <div class="admin-login" id="adminLogin">
-        <h2>Admin Login</h2>
-        <input type="password" id="adminPassword" placeholder="Enter password">
-        <button onclick="checkPassword()">Login</button>
-    </div>
-
-    <div class="admin-panel" id="adminPanel" style="display: none;">
+    <div class="admin-panel" id="adminPanel">
         <h2>Admin Panel</h2>
         <form id="productForm">
             <input type="text" id="productTitle" placeholder="Product Title" required>
@@ -77,100 +68,6 @@
     </div>
 
     <script>
-        const correctPassword = 'admin123';
-
-        function checkPassword() {
-            const password = document.getElementById('adminPassword').value;
-            if (password === correctPassword) {
-                document.getElementById('adminLogin').style.display = 'none';
-                document.getElementById('adminPanel').style.display = 'block';
-                loadProducts();
-            } else {
-                alert('Incorrect password');
-            }
-        }
-
-        function loadProducts() {
-            const productList = document.getElementById('productList');
-            productList.innerHTML = '';
-
-            const products = JSON.parse(localStorage.getItem('products')) || [];
-
-            products.forEach((product, index) => {
-                const productItem = document.createElement('div');
-                productItem.className = 'product-item';
-                productItem.innerHTML = `
-                    <h3>${product.title}</h3>
-                    <p>${product.description}</p>
-                    <img src="${product.imgSrc}" alt="${product.title}">
-                    <a href="${product.download}" download>Download</a>
-                    <button onclick="editProduct(${index})">Edit</button>
-                    <button onclick="deleteProduct(${index})">Delete</button>
-                `;
-                productList.appendChild(productItem);
-            });
-        }
-
-        function deleteProduct(index) {
-            const products = JSON.parse(localStorage.getItem('products')) || [];
-            products.splice(index, 1);
-            localStorage.setItem('products', JSON.stringify(products));
-            loadProducts();
-        }
-
-        document.getElementById('productForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const title = document.getElementById('productTitle').value;
-            const description = document.getElementById('productDescription').value;
-            const imgFile = document.getElementById('productImg').files[0];
-            const downloadFile = document.getElementById('productDownload').files[0];
-
-            if (!title || !description || !imgFile || !downloadFile) {
-                alert('Please fill in all fields');
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append('imgFile', imgFile);
-            formData.append('downloadFile', downloadFile);
-
-            fetch('upload.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                const errorMessage = document.getElementById('errorMessage');
-                if (data.success) {
-                    const imgSrc = data.imgUrl; // La URL del archivo de imagen
-                    const downloadSrc = data.downloadUrl; // La URL del archivo de descarga
-
-                    const newProduct = {
-                        title,
-                        description,
-                        imgSrc,
-                        download: downloadSrc
-                    };
-
-                    let products = JSON.parse(localStorage.getItem('products')) || [];
-                    products.push(newProduct);
-                    localStorage.setItem('products', JSON.stringify(products));
-                    loadProducts();
-
-                    document.getElementById('confirmationMessage').style.display = 'block';
-                    document.getElementById('addAnotherProduct').style.display = 'inline';
-                    errorMessage.textContent = ''; // Clear previous error messages
-                } else {
-                    errorMessage.textContent = data.error || 'Error uploading files';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('errorMessage').textContent = 'Error uploading files';
-            });
-        });
-
         document.getElementById('imgDropzone').addEventListener('click', function() {
             document.getElementById('productImg').click();
         });
@@ -195,12 +92,86 @@
             }
         });
 
+        document.getElementById('productForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const title = document.getElementById('productTitle').value;
+            const description = document.getElementById('productDescription').value;
+            const imgFile = document.getElementById('productImg').files[0];
+            const downloadFile = document.getElementById('productDownload').files[0];
+
+            if (!title || !description || !imgFile || !downloadFile) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const imgSrc = event.target.result;
+
+                const reader2 = new FileReader();
+                reader2.onload = function(event2) {
+                    const downloadSrc = event2.target.result;
+
+                    const newProduct = {
+                        title,
+                        description,
+                        imgSrc,
+                        download: downloadSrc
+                    };
+
+                    let products = JSON.parse(localStorage.getItem('products')) || [];
+                    products.push(newProduct);
+                    localStorage.setItem('products', JSON.stringify(products));
+                    loadProducts();
+
+                    document.getElementById('confirmationMessage').style.display = 'block';
+                    document.getElementById('addAnotherProduct').style.display = 'inline';
+                    document.getElementById('errorMessage').textContent = ''; // Clear previous error messages
+                };
+                reader2.readAsDataURL(downloadFile);
+            };
+            reader.readAsDataURL(imgFile);
+        });
+
+        function loadProducts() {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
+
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+
+            products.forEach((product, index) => {
+                const productItem = document.createElement('div');
+                productItem.className = 'product-item';
+                productItem.innerHTML = `
+                    <h3>${product.title}</h3>
+                    <p>${product.description}</p>
+                    <img src="${product.imgSrc}" alt="${product.title}">
+                    <a href="${product.download}" download>Download</a>
+                    <button onclick="deleteProduct(${index})">Delete</button>
+                `;
+                productList.appendChild(productItem);
+            });
+        }
+
+        function deleteProduct(index) {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            products.splice(index, 1);
+            localStorage.setItem('products', JSON.stringify(products));
+            loadProducts();
+        }
+
         function resetForm() {
             document.getElementById('productForm').reset();
             document.getElementById('imgPreview').style.display = 'none';
             document.getElementById('imgFileName').textContent = '';
             document.getElementById('downloadFileName').textContent = '';
+            document.getElementById('confirmationMessage').style.display = 'none';
+            document.getElementById('addAnotherProduct').style.display = 'none';
         }
+
+        // Cargar productos al inicio
+        document.addEventListener('DOMContentLoaded', loadProducts);
     </script>
 </body>
 </html>
