@@ -9,8 +9,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $downloadFile = $_FILES['downloadFile'];
 
         // Directorios para almacenar los archivos
-        $imgDir = 'uploads/images/';
-        $downloadDir = 'uploads/files/';
+        $imgDir = 'Images';
+        $downloadDir = 'rvts';
 
         // Crear directorios si no existen
         if (!is_dir($imgDir)) {
