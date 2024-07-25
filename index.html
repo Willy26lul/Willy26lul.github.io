@@ -1,27 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products - GalaBlock</title>
-    <link rel="stylesheet" href="index.css">
+    <meta charset="UTF-8" />
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GalaBlock</title>
+    <link rel="stylesheet" href="index.css" />
     <style>
-        .container {
+        header {
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #000000;
+            color: #fff;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
         }
-        .product-item {
-            flex: 0 0 calc(20% - 10px);
-            box-sizing: border-box;
-            border: 1px solid #ddd;
-            padding: 10px;
-            border-radius: 5px;
-            text-align: center;
+
+        header h1 {
+            font-size: 20px;
         }
-        .product-item img {
-            max-width: 100%;
-            height: auto;
+
+        header a.logo {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        header a.logo:hover {
+            text-decoration: underline;
+        }
+
+        nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -34,32 +60,122 @@
             <a href="index.html">Home</a>
             <a href="products.html">Products</a>
         </nav>
+
+    </header>
+    <script type="text/javascript">
+        atOptions = {
+            'key' : '0df2ad07cf36f0a3e1acb536389f414f',
+            'format' : 'iframe',
+            'height' : 250,
+            'width' : 300,
+            'params' : {}
+        };
+    </script>
+    <script type="text/javascript" src="//www.topcreativeformat.com/0df2ad07cf36f0a3e1acb536389f414f/invoke.js"></script>
+    <div class="container-items">
+        <div class="item">
+            <figure>
+                <a href="product.html?img=Images/Mustanggt500%202.jpg&title=Ford&download=rvts/LR_Ford_GT40_10353.rfa">
+                    <img src="Images/Mustanggt500%202.jpg" alt="Mustanggt500" />
+                </a>
+            </figure>
+            <div class="info-product">
+                <h2>Ford</h2>
+                <p class="price hidden-price"></p>
+                <a href="rvts/LR_Ford_GT40_10353.rfa" download="rvts/LR_Ford_GT40_10353.rfa">
+                    <button>Descargar</button>
+                </a>
+            </div>
+        </div>
+        <div class="item">
+            <figure>
+                <a href="product.html?img=Images/concretetruck4.jpg&title=Concrete%20Truck&download=rvts/Concrete_Truck_2012.rfa">
+                    <img src="Images/concretetruck4.jpg" alt="Concrete Truck" />
+                </a>
+            </figure>
+            <div class="info-product">
+                <h2>Concrete Truck</h2>
+                <p class="price hidden-price"></p>
+                <a href="rvts/Concrete_Truck_2012.rfa" download="rvts/Concrete_Truck_2012.rfa">
+                    <button>Descargar</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <script src="index.js"></script>
+    <script type="text/javascript">
+        atOptions = {
+            'key': '0df2ad07cf36f0a3e1acb536389f414f',
+            'format': 'iframe',
+            'height': 250,
+            'width': 300,
+            'params': {}
+        };
+    </script>
+    <script type="text/javascript" src="//www.topcreativeformat.com/0df2ad07cf36f0a3e1acb536389f414f/invoke.js"></script>
+</body>
+</html> en este codigo:<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products - GalaBlock</title>
+    <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+    <header>
+        <h1>GALABLOCK</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="products.html">Productos</a></li>
+                <li><a href="about.html">Sobre Nosotros</a></li>
+                <li><a href="contact.html">Contacto</a></li>
+            </ul>
+        </nav>
+        <div class="container-icon">
+            <svg class="icon-cart" viewBox="0 0 24 24">
+                <!-- SVG content for cart icon -->
+            </svg>
+            <div class="container-cart-products hidden-cart">
+                <!-- Cart content -->
+            </div>
+        </div>
     </header>
 
-    <div class="container" id="productContainer">
-        <!-- Los productos se mostrarán aquí -->
+    <div class="container-items">
+        <!-- Aquí puedes agregar los productos de tu tienda -->
+        <div class="item">
+            <figure>
+                <a href="product.html?img=Images/Mustanggt500%202.jpg&title=Ford&download=rvts/LR_Ford_GT40_10353.rfa">
+                    <img src="Images/Mustanggt500%202.jpg" alt="Mustanggt500" />
+                </a>
+            </figure>
+            <div class="info-product">
+                <h2>Ford</h2>
+                <p class="price hidden-price"></p>
+                <a href="rvts/LR_Ford_GT40_10353.rfa" download="rvts/LR_Ford_GT40_10353.rfa">
+                    <button>Descargar</button>
+                </a>
+            </div>
+        </div>
+        <div class="item">
+            <figure>
+                <a href="product.html?img=Images/concretetruck4.jpg&title=Concrete%20Truck&download=rvts/Concrete_Truck_2012.rfa">
+                    <img src="Images/concretetruck4.jpg" alt="Concrete Truck" />
+                </a>
+            </figure>
+            <div class="info-product">
+                <h2>Concrete Truck</h2>
+                <p class="price hidden-price"></p>
+                <a href="rvts/Concrete_Truck_2012.rfa" download="rvts/Concrete_Truck_2012.rfa">
+                    <button>Descargar</button>
+                </a>
+            </div>
+        </div>
     </div>
-
-    <script>
-        function loadProducts() {
-            const productContainer = document.getElementById('productContainer');
-            const products = JSON.parse(localStorage.getItem('products')) || [];
-
-            products.forEach(product => {
-                const productItem = document.createElement('div');
-                productItem.className = 'product-item';
-                productItem.innerHTML = `
-                    <a href="product.html?title=${encodeURIComponent(product.title)}&img=${encodeURIComponent(product.imgSrc)}&description=${encodeURIComponent(product.description)}&download=${encodeURIComponent(product.download)}">
-                        <img src="${product.imgSrc}" alt="${product.title}">
-                    </a>
-                    <h3>${product.title}</h3>
-                    <a href="${product.download}" download>Download</a>
-                `;
-                productContainer.appendChild(productItem);
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', loadProducts);
-    </script>
+    <script src="index.js"></script>
 </body>
 </html>
