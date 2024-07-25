@@ -25,8 +25,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $downloadPath = $downloadDir . basename($downloadFile['name']);
 
         // Verificar si hubo errores al subir los archivos
-        if ($imgFile['error'] !== UPLOAD_ERR_OK || $downloadFile['error'] !== UPLOAD_ERR_OK) {
-            $response['error'] = 'Error during file upload';
+        if ($imgFile['error'] !== UPLOAD_ERR_OK) {
+            $response['error'] = 'Error uploading image file: ' . $imgFile['error'];
+        } elseif ($downloadFile['error'] !== UPLOAD_ERR_OK) {
+            $response['error'] = 'Error uploading download file: ' . $downloadFile['error'];
         } else {
             // Validar y mover archivos
             if (move_uploaded_file($imgFile['tmp_name'], $imgPath) && move_uploaded_file($downloadFile['tmp_name'], $downloadPath)) {
