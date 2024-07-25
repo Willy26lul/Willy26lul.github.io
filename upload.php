@@ -26,9 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Verificar si hubo errores al subir los archivos
         if ($imgFile['error'] !== UPLOAD_ERR_OK) {
-            $response['error'] = 'Error uploading image file: ' . $imgFile['error'];
+            $response['error'] = 'Error uploading image file: ' . getUploadError($imgFile['error']);
         } elseif ($downloadFile['error'] !== UPLOAD_ERR_OK) {
-            $response['error'] = 'Error uploading download file: ' . $downloadFile['error'];
+            $response['error'] = 'Error uploading download file: ' . getUploadError($downloadFile['error']);
         } else {
             // Validar y mover archivos
             if (move_uploaded_file($imgFile['tmp_name'], $imgPath) && move_uploaded_file($downloadFile['tmp_name'], $downloadPath)) {
@@ -47,4 +47,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 echo json_encode($response);
+
+function getUploadError($errorCode) {
+    switch ($errorCode) {
+        case UPLOAD_ERR_INI_SIZE:
+        case UPLOAD_ERR_FORM_SIZE:
+            return 'The uploaded file exceeds the allowed size';
+        case UPLOAD_ERR_PARTIAL:
+            return 'The uploaded file was only partially uploaded';
+        case UPLOAD_ERR_NO_FILE:
+            return 'No file was uploaded';
+        case UPLOAD_ERR_NO_TMP_DIR:
+            return 'Missing a temporary folder';
+        case UPLOAD_ERR_CANT_WRITE:
+            return 'Failed to write file to disk';
+        case UPLOAD_ERR_EXTENSION:
+            return 'A PHP extension stopped the file upload';
+        default:
+            return 'Unknown upload error';
+    }
+}
 ?>
