@@ -1,57 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details - GalaBlock</title>
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="index.css">
     <style>
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background-color: #000000;
-            color: #fff;
-            position: sticky;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-
-        header h1 {
-            font-size: 20px;
-        }
-
-        header a.logo {
-            color: #fff;
-            text-decoration: none;
-            font-weight: 700;
-        }
-
-        header a.logo:hover {
-            text-decoration: underline;
-        }
-
-        nav {
-            display: flex;
-            gap: 15px;
-        }
-
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: 700;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
         .product-detail {
             padding: 20px;
+            text-align: center;
+        }
+        .product-detail img {
+            max-width: 100%;
+            height: auto;
+        }
+        .product-detail a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .product-detail a:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -66,43 +39,38 @@
         </nav>
     </header>
 
-    <div class="product-detail">
-        <figure>
-            <img src="" alt="Product Image" />
-        </figure>
-        <div class="info-product">
-            <h2>Product Title</h2>
-            <p class="description">Maximize efficiency in your architectural projects with GALABLOCK's optimized Revit families. Explore models designed for seamless integration and performance.</p>
-            <a href="" download>
-                <button>Descargar</button>
-            </a>
-        </div>
+    <div class="product-detail" id="productDetail">
+        <!-- Los detalles del producto se mostrarán aquí -->
     </div>
 
-    <script src="index.js"></script>
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function() {
+    <script>
+        function getQueryParams() {
             const params = new URLSearchParams(window.location.search);
-            const img = params.get('img');
-            const title = params.get('title');
-            const description = params.get('description');
-            const download = params.get('download');
-            
-            if (img && title && download && description) {
-                const imgElement = document.querySelector('.product-detail img');
-                const titleElement = document.querySelector('.product-detail h2');
-                const descriptionElement = document.querySelector('.product-detail .description');
-                const downloadLink = document.querySelector('.product-detail a');
+            return {
+                title: params.get('title'),
+                img: params.get('img'),
+                description: params.get('description'),
+                download: params.get('download')
+            };
+        }
 
-                if (imgElement) imgElement.src = img;
-                if (titleElement) titleElement.textContent = title;
-                if (descriptionElement) descriptionElement.textContent = description;
-                if (downloadLink) {
-                    downloadLink.href = download;
-                    downloadLink.download = download.split('/').pop();
-                }
+        function displayProduct() {
+            const { title, img, description, download } = getQueryParams();
+
+            if (title && img && description && download) {
+                const productDetail = document.getElementById('productDetail');
+                productDetail.innerHTML = `
+                    <h2>${title}</h2>
+                    <img src="${img}" alt="${title}">
+                    <p>${description}</p>
+                    <a href="${download}" download>Download</a>
+                `;
+            } else {
+                document.getElementById('productDetail').innerHTML = '<p>Product details not found.</p>';
             }
-        });
+        }
+
+        document.addEventListener('DOMContentLoaded', displayProduct);
     </script>
 </body>
 </html>
