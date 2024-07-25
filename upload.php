@@ -27,8 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Validar y mover archivos
         if (move_uploaded_file($imgFile['tmp_name'], $imgPath) && move_uploaded_file($downloadFile['tmp_name'], $downloadPath)) {
             $response['success'] = true;
-            $response['imgUrl'] = $imgPath; // Ruta del archivo de imagen
-            $response['downloadUrl'] = $downloadPath; // Ruta del archivo de descarga
+            $response['imgUrl'] = '/' . $imgPath; // Ruta del archivo de imagen
+            $response['downloadUrl'] = '/' . $downloadPath; // Ruta del archivo de descarga
         } else {
             $response['error'] = 'Error moving files';
         }
