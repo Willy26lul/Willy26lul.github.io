@@ -61,7 +61,9 @@ nav a {
     flex-direction: column;
     align-items: center;
     padding: 10px;
+    height: 300px; /* Ajusta según el tamaño total esperado de las tarjetas */
 }
+
 
 .item:hover {
     transform: scale(1.05);
@@ -69,7 +71,8 @@ nav a {
 
 .item img {
     width: 100%;
-    object-fit: cover;
+    height: 150px; /* Ajusta según la altura deseada */
+    object-fit: cover; /* Asegura que la imagen cubra el contenedor sin distorsión */
 }
 
 .info-product {
