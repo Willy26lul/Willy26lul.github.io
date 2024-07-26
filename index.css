@@ -64,7 +64,6 @@ nav a {
     height: 300px; /* Ajusta según el tamaño total esperado de las tarjetas */
 }
 
-
 .item:hover {
     transform: scale(1.05);
 }
@@ -84,7 +83,7 @@ nav a {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100px; /* Ajusta según necesites */
+    height: 150px; /* Ajusta según necesites */
     overflow: hidden; /* Esconde el texto que exceda la altura */
 }
 
@@ -95,31 +94,6 @@ nav a {
     overflow: hidden; /* Esconde el desbordamiento del texto */
     text-overflow: ellipsis; /* Añade puntos suspensivos si el texto es demasiado largo */
     white-space: nowrap; /* Evita que el texto se divida en varias líneas */
-}
-
-.info-product button {
-    border: none;
-    background: none;
-    background-color: #000;
-    color: #fff;
-    padding: 10px 0;
-    cursor: pointer;
-    width: 100%;
-    display: block; /* Asegura que el botón sea un bloque completo */
-    font-size: 14px; /* Tamaño de fuente consistente */
-    text-transform: uppercase; /* Estilo de texto consistente */
-}
-.info-product {
-    padding: 10px 0;
-    line-height: 1.5;
-    text-align: center;
-    font-family: 'Oswald', sans-serif;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 150px; /* Asegúrate de que el contenedor tenga suficiente altura */
-    overflow: hidden; /* Esconde el texto que exceda la altura */
 }
 
 .info-product button {
