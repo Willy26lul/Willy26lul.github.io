@@ -33,7 +33,7 @@ header h1 {
 
 header a {
     color: #fff;
-    text-decoration: none; /* Quita el subrayado del enlace */
+    transform: scale(1.05); /* Quita el subrayado del enlace */
 }
 
 nav {
@@ -59,7 +59,7 @@ nav a {
 }
 
 nav a:hover {
-    text-decoration: underline; /* Opcional: Añade subrayado en hover, si lo deseas */
+    transform: scale(1.05); /* Opcional: Añade subrayado en hover, si lo deseas */
 }
 
 
