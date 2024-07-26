@@ -43,11 +43,25 @@ nav {
 nav ul {
     list-style: none; /* Quita las viñetas */
     display: flex; /* Muestra los elementos de lista en una fila */
+    padding: 0; /* Quita el padding predeterminado del ul */
+    margin: 0; /* Quita el margen predeterminado del ul */
 }
 
 nav li {
     margin: 0 15px; /* Espacio entre los elementos de lista */
 }
+
+nav a {
+    color: #fff;
+    text-decoration: none; /* Quita el subrayado del enlace */
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline; /* Opcional: Añade subrayado en hover, si lo deseas */
+}
+
 
 nav a {
     font-size: 1rem;
