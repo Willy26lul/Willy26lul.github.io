@@ -69,7 +69,7 @@ nav a {
 }
 
 nav a:hover {
-    text-decoration: underline; /* Opcional: Añade subrayado en hover, si lo deseas */
+    transform: scale(1.05);
 }
 
 .container {
