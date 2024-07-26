@@ -1,100 +1,68 @@
-/* Globales */
-*::after,
-*::before,
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* Otros estilos se mantienen igual */
 
 body {
-    margin: 0 auto;
-    max-width: 1200px;
-    font-family: 'Oswald', sans-serif;
-    color: #333;
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+    text-align: center;
 }
 
-/* Header */
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #000000;
+    background-color: #000;
     color: #fff;
-    position: sticky;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
+    padding: 20px 0;
 }
 
 header h1 {
-    font-size: 20px;
+    margin: 0;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
 }
 
-header nav {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
+nav {
+    margin: 10px 0;
 }
 
-header nav ul {
-    display: flex;
-    list-style: none;
-    gap: 15px;
-}
-
-header nav a {
+nav a {
     color: #fff;
     text-decoration: none;
-    font-weight: 700;
-    font-size: 16px;
+    margin: 0 15px;
+    font-size: 1rem;
+    font-weight: bold;
 }
 
-header nav a:hover {
-    text-decoration: underline;
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-/* Container Items */
 .container-items {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 20px;
-    margin-top: 100px;
-    justify-items: center;
-    max-width: 1200px; /* Matches the header width */
-    margin-left: auto;
-    margin-right: auto; /* Centers the container */
-    padding: 0 20px; /* Padding to avoid content touching the edges */
+    grid-gap: 20px;
 }
 
-/* Item */
 .item {
-    border-radius: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    border: 1px solid #ddd;
+    transition: transform 0.2s ease-in-out;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    aspect-ratio: 1 / 1; /* Makes the item square */
-    width: 100%; /* Ensures the item takes full width */
+    padding: 10px;
+}
+
+.item:hover {
+    transform: scale(1.05);
 }
 
 .item img {
     width: 100%;
-    height: auto; /* Adjusts the height based on the width */
     object-fit: cover;
-    border-radius: 10px;
-    transition: all .5s;
-}
-
-.item:hover {
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.20);
-}
-
-.item:hover img {
-    transform: scale(1.1);
 }
 
 .info-product {
@@ -103,6 +71,20 @@ header nav a:hover {
     text-align: center;
     font-family: 'Oswald', sans-serif;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100px; /* Ajusta según necesites */
+    overflow: hidden; /* Esconde el texto que exceda la altura */
+}
+
+.info-product h2 {
+    font-size: 1rem; /* Ajusta el tamaño del texto */
+    margin: 0;
+    padding: 0 10px; /* Padding interno para evitar que el texto toque los bordes */
+    overflow: hidden; /* Esconde el desbordamiento del texto */
+    text-overflow: ellipsis; /* Añade puntos suspensivos si el texto es demasiado largo */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
 }
 
 .info-product button {
@@ -113,70 +95,31 @@ header nav a:hover {
     padding: 10px 0;
     cursor: pointer;
     width: 100%;
-    display: block; /* Ensure the button is a block element */
-    font-size: 14px; /* Adjust font size for consistency */
-    text-transform: uppercase; /* Consistent text style */
+    display: block; /* Asegura que el botón sea un bloque completo */
+    font-size: 14px; /* Tamaño de fuente consistente */
+    text-transform: uppercase; /* Estilo de texto consistente */
 }
 
-/* Product Detail */
-.product-detail {
-    margin-top: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+footer {
+    margin: 20px 0;
 }
 
-.product-detail figure {
-    width: 300px;
-    height: 300px;
-    overflow: hidden;
-    border-radius: 10px;
+footer p {
+    margin: 0;
+    color: #777;
+    font-size: 0.9rem;
 }
 
-.product-detail img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.product-detail .info-product {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-.product-detail h2 {
-    font-size: 24px;
-    font-weight: 700;
-}
-
-.product-detail p {
-    font-size: 16px;
-    text-align: center;
-}
-
-.product-detail button {
-    border: none;
-    background: none;
-    background-color: #000;
-    color: #fff;
-    padding: 15px 10px;
-    cursor: pointer;
-}
-
-/* Media Queries */
 @media (max-width: 768px) {
     .container-items {
         grid-template-columns: repeat(2, 1fr);
     }
 
     .item {
-        padding: 10px; /* Ensures enough space for the button */
+        padding: 10px; /* Asegura suficiente espacio para el botón */
     }
 
-    .info-product button {
-        padding: 15px 0; /* Increases button height for better visibility */
+    .info-product {
+        height: 120px; /* Ajusta según necesites para móviles */
     }
 }
