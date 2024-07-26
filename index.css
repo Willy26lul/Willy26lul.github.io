@@ -113,6 +113,9 @@ header nav a:hover {
     padding: 10px 0;
     cursor: pointer;
     width: 100%;
+    display: block; /* Ensure the button is a block element */
+    font-size: 14px; /* Adjust font size for consistency */
+    text-transform: uppercase; /* Consistent text style */
 }
 
 /* Product Detail */
