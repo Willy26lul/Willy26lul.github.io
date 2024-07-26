@@ -19,6 +19,9 @@ header {
     background-color: #000;
     color: #fff;
     padding: 20px 0;
+    display: flex;
+    justify-content: space-between; /* Espacia el contenido a la izquierda y derecha */
+    align-items: center; /* Alinea verticalmente el contenido */
 }
 
 header h1 {
@@ -27,8 +30,13 @@ header h1 {
     letter-spacing: 1px;
 }
 
+header a {
+    color: #fff;
+    text-decoration: none; /* Quita el subrayado del enlace */
+}
+
 nav {
-    margin: 10px 0;
+    margin: 0;
 }
 
 nav a {
@@ -37,6 +45,10 @@ nav a {
     margin: 0 15px;
     font-size: 1rem;
     font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline; /* Opcional: Añade subrayado en hover, si lo deseas */
 }
 
 .container {
