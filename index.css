@@ -22,6 +22,7 @@ header {
     display: flex;
     justify-content: space-between; /* Espacia el contenido a la izquierda y derecha */
     align-items: center; /* Alinea verticalmente el contenido */
+    padding: 0 20px; /* Añade un poco de espacio interno a los lados */
 }
 
 header h1 {
@@ -35,14 +36,28 @@ header a {
     text-decoration: none; /* Quita el subrayado del enlace */
 }
 
+header a:hover {
+    text-decoration: none; /* Asegura que no haya subrayado al pasar el ratón */
+}
+
 nav {
     margin: 0;
+}
+
+nav ul {
+    display: flex; /* Usa flexbox para alinear los elementos en una fila */
+    list-style: none; /* Elimina los puntos de la lista */
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    margin: 0 15px; /* Espacio entre los enlaces */
 }
 
 nav a {
     color: #fff;
     text-decoration: none;
-    margin: 0 15px;
     font-size: 1rem;
     font-weight: bold;
 }
