@@ -8,20 +8,34 @@
     <title>Detalles del Producto - GalaBlock</title>
     <link rel="stylesheet" href="index.css" />
     <style>
-        /* Puedes agregar estilos específicos para la página del producto aquí */
+        /* Ajuste específico para la página del producto */
+        .product-detail {
+            max-width: 100%; /* Ajusta el ancho máximo para el contenedor de detalles del producto */
+            margin: 20px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .product-detail img {
+            max-width: 100%; /* Asegura que la imagen no exceda el ancho del contenedor */
+            height: auto; /* Mantiene la proporción de la imagen */
+        }
+
+        .product-detail .info-product {
+            padding: 20px;
+            font-family: 'Oswald', sans-serif;
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>GALABLOCK</h1>
-        <div class="container-icon">
-            <svg class="icon-cart" viewBox="0 0 24 24">
-                <!-- SVG content for cart icon -->
-            </svg>
-            <div class="container-cart-products hidden-cart">
-                <!-- Cart content -->
-            </div>
-        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="products.html">Productos</a></li>
+            </ul>
+        </nav>
     </header>
 
     <div class="product-detail">
