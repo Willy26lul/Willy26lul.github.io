@@ -87,7 +87,7 @@ nav a:hover {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    padding-top: 100px; /* Añade un padding-top para compensar la altura del header */
+    padding-top: 300px; /* Añade un padding-top para compensar la altura del header */
 }
 
 .container-items {
