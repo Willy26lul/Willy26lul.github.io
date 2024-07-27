@@ -65,7 +65,7 @@ nav a {
 }
 
 nav a:hover {
-    transform: scale(1.05); /* Escala el enlace al pasar el ratón por encima */
+    transform: scale(1.5); /* Escala el enlace al pasar el ratón por encima */
 }
 
 .container {
@@ -76,7 +76,7 @@ nav a:hover {
 
 .container-items {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 20px;
 }
 
@@ -94,7 +94,7 @@ nav a:hover {
 }
 
 .item:hover {
-    transform: scale(1.05);
+    transform: scale(1.5);
 }
 
 .item img {
