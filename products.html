@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GalaBlock</title>
+    <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+    <header>
+        <h1>GALABLOCK</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="products.html">Productos</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container-items" id="products-container">
+        <!-- Productos se generarán aquí dinámicamente -->
+    </div>
+    <script>
+        // Lista de productos
+        const products = [
+            {
+                title: "Mustang GT500",
+                imgSrc: "Images/Mustanggt500%202.jpg",
+                downloadPath: "galablock.store/LR_Ford_GT40_10353 (2).rfa"
+            },
+            {
+                title: "Concrete Truck",
+                imgSrc: "Images/concretetruck4.jpg",
+                downloadPath: "galablock.store/Concrete_Truck_2012.rfa"
+            },
+            {
+                title: "Cama Queen Marcel",
+                imgSrc: "Images/imagen_2024-07-25_185255711.png",
+                downloadPath: "galablock.store/Cama Queen Marcel.rfa"
+            },
+            {
+                title: "Cama Queen Marcel",
+                imgSrc: "Images/imagen_2024-07-25_185255711.png",
+                downloadPath: "galablock.store/Cama Queen Marcel.rfa"
+            },
+            {
+                title: "Cama Queen Marcel",
+                imgSrc: "Images/imagen_2024-07-25_185255711.png",
+                downloadPath: "galablock.store/Cama Queen Marcel.rfa"
+            },
+            {
+                title: "Cama Queen Marcel",
+                imgSrc: "Images/imagen_2024-07-25_185255711.png",
+                downloadPath: "galablock.store/Cama Queen Marcel.rfa"
+            },
+            {
+                title: "Cama Queen Marcel",
+                imgSrc: "Images/imagen_2024-07-25_185255711.png",
+                downloadPath: "galablock.store/Cama Queen Marcel.rfa"
+            },
+            {
+                title: "Cama Queen Marcel",
+                imgSrc: "Images/imagen_2024-07-25_185255711.png",
+                downloadPath: "galablock.store/Cama Queen Marcel.rfa"
+            },
+            {
+                title: "Cama Queen Marcel",
+                imgSrc: "Images/imagen_2024-07-25_185255711.png",
+                downloadPath: "galablock.store/Cama Queen Marcel.rfa"
+            },
+            {
+                title: "Cama Queen Marcel",
+                imgSrc: "Images/imagen_2024-07-25_185255711.png",
+                downloadPath: "galablock.store/Cama Queen Marcel.rfa"
+            },
+            {
+                title: "Cama Queen Marcel",
+                imgSrc: "Images/imagen_2024-07-25_185255711.png",
+                downloadPath: "galablock.store/Cama Queen Marcel.rfa"
+            },
+            {
+                title: "Cama Queen Marcel",
+                imgSrc: "Images/imagen_2024-07-25_185255711.png",
+                downloadPath: "galablock.store/Cama Queen Marcel.rfa"
+            },
+            {
+                title: "Cama Queen Marcel",
+                imgSrc: "Images/imagen_2024-07-25_185255711.png",
+                downloadPath: "galablock.store/Cama Queen Marcel.rfa"
+            },
+            
+
+            
+            // Agrega más productos aquí
+        ];
+
+        // Función para crear un elemento de producto
+        function createProductElement(product) {
+            const itemDiv = document.createElement("div");
+            itemDiv.className = "item";
+
+            const figure = document.createElement("figure");
+
+            const link = document.createElement("a");
+            link.href = `product.html?img=${product.imgSrc}&title=${encodeURIComponent(product.title)}&download=${product.downloadPath}`;
+            
+            const img = document.createElement("img");
+            img.src = product.imgSrc;
+            img.alt = product.title;
+
+            link.appendChild(img);
+            figure.appendChild(link);
+            itemDiv.appendChild(figure);
+
+            const infoProductDiv = document.createElement("div");
+            infoProductDiv.className = "info-product";
+
+            const h2 = document.createElement("h2");
+            h2.textContent = product.title;
+
+            const p = document.createElement("p");
+            p.className = "price hidden-price";
+
+            const downloadLink = document.createElement("a");
+            downloadLink.href = product.downloadPath;
+            downloadLink.download = product.downloadPath;
+            
+            const button = document.createElement("button");
+            button.textContent = "Descargar";
+
+            downloadLink.appendChild(button);
+            infoProductDiv.appendChild(h2);
+            infoProductDiv.appendChild(p);
+            infoProductDiv.appendChild(downloadLink);
+            itemDiv.appendChild(infoProductDiv);
+
+            return itemDiv;
+        }
+
+        // Agregar los productos al contenedor
+        const productsContainer = document.getElementById("products-container");
+        products.forEach(product => {
+            const productElement = createProductElement(product);
+            productsContainer.appendChild(productElement);
+        });
+    </script>
+</body>
+</html>
