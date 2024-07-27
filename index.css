@@ -18,7 +18,7 @@ body {
 header {
     background-color: #000;
     color: #fff;
-    padding: 20px 0;
+    padding: 80px 0;
     display: flex;
     justify-content: space-between; /* Espacia el contenido a la izquierda y derecha */
     align-items: center; /* Alinea verticalmente el contenido */
@@ -33,7 +33,12 @@ header h1 {
 
 header a {
     color: #fff;
-    transform: scale(1.05); /* Quita el subrayado del enlace */
+    text-decoration: none; /* Quita el subrayado del enlace */
+    transition: transform 0.3s ease; /* Añade una transición suave */
+}
+
+header a:hover {
+    transform: scale(1.05); /* Escala el enlace al pasar el ratón por encima */
 }
 
 nav {
@@ -56,20 +61,11 @@ nav a {
     text-decoration: none; /* Quita el subrayado del enlace */
     font-size: 1rem;
     font-weight: bold;
+    transition: transform 0.3s ease; /* Añade una transición suave */
 }
 
 nav a:hover {
-    transform: scale(1.05); /* Opcional: Añade subrayado en hover, si lo deseas */
-}
-
-
-nav a {
-    font-size: 1rem;
-    font-weight: bold;
-}
-
-nav a:hover {
-    transform: scale(1.05);
+    transform: scale(1.05); /* Escala el enlace al pasar el ratón por encima */
 }
 
 .container {
