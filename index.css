@@ -40,6 +40,15 @@ header a {
 header a:hover {
     transform: scale(1.5); /* Escala el enlace al pasar el ratón por encima */
 }
+header h1 a {
+    color: #fff;
+    text-decoration: none;
+    transition: transform 0.3s ease; /* Añade una transición suave */
+}
+
+header h1 a:hover {
+    transform: scale(1.05); /* Escala el enlace al pasar el ratón por encima */
+}
 
 nav {
     margin: 0;
