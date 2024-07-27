@@ -92,6 +92,7 @@ nav a:hover {
 
 .container-items {
     display: grid;
+    padding: 20px 0;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 20px;
 }
