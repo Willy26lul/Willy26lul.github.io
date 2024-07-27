@@ -27,69 +27,21 @@
             {
                 title: "Mustang GT500",
                 imgSrc: "Images/Mustanggt500%202.jpg",
-                downloadPath: "galablock.store/LR_Ford_GT40_10353 (2).rfa"
+                downloadPath: "galablock.store/LR_Ford_GT40_10353 (2).rfa",
+                description: "El Ford Mustang GT500 es un coche icónico con un motor potente y diseño agresivo."
             },
             {
                 title: "Concrete Truck",
                 imgSrc: "Images/concretetruck4.jpg",
-                downloadPath: "galablock.store/Concrete_Truck_2012.rfa"
+                downloadPath: "galablock.store/Concrete_Truck_2012.rfa",
+                description: "Camión de concreto ideal para grandes obras y construcciones duraderas."
             },
             {
                 title: "Cama Queen Marcel",
                 imgSrc: "Images/imagen_2024-07-25_185255711.png",
-                downloadPath: "galablock.store/Cama Queen Marcel.rfa"
+                downloadPath: "galablock.store/Cama Queen Marcel.rfa",
+                description: "Cama Queen Size con diseño moderno y confort inigualable."
             },
-            {
-                title: "Cama Queen Marcel",
-                imgSrc: "Images/imagen_2024-07-25_185255711.png",
-                downloadPath: "galablock.store/Cama Queen Marcel.rfa"
-            },
-            {
-                title: "Cama Queen Marcel",
-                imgSrc: "Images/imagen_2024-07-25_185255711.png",
-                downloadPath: "galablock.store/Cama Queen Marcel.rfa"
-            },
-            {
-                title: "Cama Queen Marcel",
-                imgSrc: "Images/imagen_2024-07-25_185255711.png",
-                downloadPath: "galablock.store/Cama Queen Marcel.rfa"
-            },
-            {
-                title: "Cama Queen Marcel",
-                imgSrc: "Images/imagen_2024-07-25_185255711.png",
-                downloadPath: "galablock.store/Cama Queen Marcel.rfa"
-            },
-            {
-                title: "Cama Queen Marcel",
-                imgSrc: "Images/imagen_2024-07-25_185255711.png",
-                downloadPath: "galablock.store/Cama Queen Marcel.rfa"
-            },
-            {
-                title: "Cama Queen Marcel",
-                imgSrc: "Images/imagen_2024-07-25_185255711.png",
-                downloadPath: "galablock.store/Cama Queen Marcel.rfa"
-            },
-            {
-                title: "Cama Queen Marcel",
-                imgSrc: "Images/imagen_2024-07-25_185255711.png",
-                downloadPath: "galablock.store/Cama Queen Marcel.rfa"
-            },
-            {
-                title: "Cama Queen Marcel",
-                imgSrc: "Images/imagen_2024-07-25_185255711.png",
-                downloadPath: "galablock.store/Cama Queen Marcel.rfa"
-            },
-            {
-                title: "Cama Queen Marcel",
-                imgSrc: "Images/imagen_2024-07-25_185255711.png",
-                downloadPath: "galablock.store/Cama Queen Marcel.rfa"
-            },
-            {
-                title: "Cama Queen Marcel",
-                imgSrc: "Images/imagen_2024-07-25_185255711.png",
-                downloadPath: "galablock.store/Cama Queen Marcel.rfa"
-            },
-            
             // Agrega más productos aquí
         ];
 
@@ -101,7 +53,7 @@
             const figure = document.createElement("figure");
 
             const link = document.createElement("a");
-            link.href = `product.html?img=${product.imgSrc}&title=${encodeURIComponent(product.title)}&download=${product.downloadPath}`;
+            link.href = `product.html?img=${product.imgSrc}&title=${encodeURIComponent(product.title)}&download=${product.downloadPath}&description=${encodeURIComponent(product.description)}`;
             
             const img = document.createElement("img");
             img.src = product.imgSrc;
