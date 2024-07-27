@@ -18,10 +18,15 @@ body {
 header {
     background-color: #000;
     color: #fff;
-    padding: 20px 0; /*padding vertial*/
+    padding: 20px 0; /* Padding vertical */
     display: flex;
     justify-content: space-between; /* Espacia el contenido a la izquierda y derecha */
     align-items: center; /* Alinea verticalmente el contenido */
+    position: fixed; /* Fija el header en la parte superior */
+    top: 0; /* Alinea el header en la parte superior de la pantalla */
+    left: 0; /* Alinea el header al inicio de la pantalla */
+    width: 100%; /* Ocupa todo el ancho de la pantalla */
+    z-index: 1000; /* Asegura que el header esté por encima de otros elementos */
 }
 
 header h1 {
@@ -40,6 +45,7 @@ header a {
 header a:hover {
     transform: scale(1.05); /* Escala el enlace al pasar el ratón por encima */
 }
+
 header h1 a {
     color: #fff;
     text-decoration: none;
@@ -81,6 +87,7 @@ nav a:hover {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    padding-top: 80px; /* Añade un padding-top para compensar la altura del header */
 }
 
 .container-items {
