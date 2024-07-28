@@ -51,4 +51,3 @@ document.getElementById('productForm').addEventListener('submit', function(e) {
         document.getElementById('confirmationMessage').style.display = 'block';
     });
 });
-// 404
